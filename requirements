@@ -1,0 +1,7 @@
+numpy
+scipy
+healpy
+pylab
+git+https://github.com/vafaei-ar/ccgpack.git
+tensorflow
+keras
