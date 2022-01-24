@@ -1,4 +1,3 @@
-from ntpath import join
 import numpy as np
 import healpy as hp
 import ccgpack as ccg
