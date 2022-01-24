@@ -80,8 +80,8 @@ class DataCreator():
             for j in [0, 1, 2, 3]:
                 for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-                    string_map = hp.read_map(f'map1n_allz_rtaapixlw_2048_{i}.fits', nest=1, verbose=0)
-                    gaussian_map = hp.read_map(f'product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{j}.fits', nest=1, verbose=0)
+                    string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_{i}.fits', nest=1, verbose=0)
+                    gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{j}.fits', nest=1, verbose=0)
 
                     cmb_with_string = gaussian_map + g_mu*string_map
 
@@ -98,8 +98,8 @@ class DataCreator():
         # test data:
         for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-            string_map = hp.read_map('map1n_allz_rtaapixlw_2048_3.fits', nest=1, verbose=0)
-            gaussian_map = hp.read_map('product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1, verbose=0)
+            string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1, verbose=0)
+            gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1, verbose=0)
 
             cmb_with_string = gaussian_map + g_mu*string_map
 
