@@ -90,11 +90,9 @@ class DataCreator():
 
                     for k in range(768):
                         array = cmb_with_string_patchs[k]
-                        cv2.imwrite(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png', array)
-                        # array = array.astype(np.uint8)
-                        # image = Image.fromarray(array)
-                        # image = image.convert('L')
-                        # image.save(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
+                        array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
+                        image = Image.fromarray(array)
+                        image.save(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
 
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
