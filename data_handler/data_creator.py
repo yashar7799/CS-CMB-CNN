@@ -5,6 +5,7 @@ import os
 import shutil
 from glob import glob
 from PIL import Image
+import cv2
 
 def train_val_spliter(base_folder, folder, val_ratio):
     dirs = np.array(glob(os.path.join(base_folder, folder, '*')))
@@ -88,8 +89,12 @@ class DataCreator():
                     cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
                     for k in range(768):
-                        image = Image.fromarray(cmb_with_string_patchs[k])
-                        image.save(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
+                        array = cmb_with_string_patchs[k]
+                        cv2.imwrite(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png', array)
+                        # array = array.astype(np.uint8)
+                        # image = Image.fromarray(array)
+                        # image = image.convert('L')
+                        # image.save(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
 
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
@@ -123,23 +128,23 @@ class DataCreator():
                 if folder == '0':
                     labels[train] = '0'
                 elif folder == '1e-5':
-                    labels[train] = '1e-5'
+                    labels[train] = '1'
                 elif folder == '5e-6':
-                    labels[train] = '5e-6'
+                    labels[train] = '2'
                 elif folder == '1e-6':
-                    labels[train] = '1e-6'
+                    labels[train] = '3'
                 elif folder == '5e-7':
-                    labels[train] = '5e-7'
+                    labels[train] = '4'
                 elif folder == '1e-7':
-                    labels[train] = '1e-7'
+                    labels[train] = '5'
                 elif folder == '5e-8':
-                    labels[train] = '5e-8'
+                    labels[train] = '6'
                 elif folder == '1e-8':
-                    labels[train] = '1e-8'
+                    labels[train] = '7'
                 elif folder == '5e-9':
-                    labels[train] = '5e-9'
+                    labels[train] = '8'
                 else :
-                    labels[train] = '1e-9'
+                    labels[train] = '9'
 
 
             for val in val_files:
@@ -147,23 +152,23 @@ class DataCreator():
                 if folder == '0':
                     labels[val] = '0'
                 elif folder == '1e-5':
-                    labels[val] = '1e-5'
+                    labels[val] = '1'
                 elif folder == '5e-6':
-                    labels[val] = '5e-6'
+                    labels[val] = '2'
                 elif folder == '1e-6':
-                    labels[val] = '1e-6'
+                    labels[val] = '3'
                 elif folder == '5e-7':
-                    labels[val] = '5e-7'
+                    labels[val] = '4'
                 elif folder == '1e-7':
-                    labels[val] = '1e-7'
+                    labels[val] = '5'
                 elif folder == '5e-8':
-                    labels[val] = '5e-8'
+                    labels[val] = '6'
                 elif folder == '1e-8':
-                    labels[val] = '1e-8'
+                    labels[val] = '7'
                 elif folder == '5e-9':
-                    labels[val] = '5e-9'
+                    labels[val] = '8'
                 else :
-                    labels[val] = '1e-9'
+                    labels[val] = '9'
 
             test_dirs = np.array(glob(os.path.join(self.base_folder, 'test', folder, '*')))
 
@@ -181,23 +186,23 @@ class DataCreator():
                 if folder == '0':
                     labels[test] = '0'
                 elif folder == '1e-5':
-                    labels[test] = '1e-5'
+                    labels[test] = '1'
                 elif folder == '5e-6':
-                    labels[test] = '5e-6'
+                    labels[test] = '2'
                 elif folder == '1e-6':
-                    labels[test] = '1e-6'
+                    labels[test] = '3'
                 elif folder == '5e-7':
-                    labels[test] = '5e-7'
+                    labels[test] = '4'
                 elif folder == '1e-7':
-                    labels[test] = '1e-7'
+                    labels[test] = '5'
                 elif folder == '5e-8':
-                    labels[test] = '5e-8'
+                    labels[test] = '6'
                 elif folder == '1e-8':
-                    labels[test] = '1e-8'
+                    labels[test] = '7'
                 elif folder == '5e-9':
-                    labels[test] = '5e-9'
+                    labels[test] = '8'
                 else :
-                    labels[test] = '1e-9'
+                    labels[test] = '9'
         
         # print out train/val/test counts:
 
