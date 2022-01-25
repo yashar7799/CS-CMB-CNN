@@ -1,3 +1,4 @@
+from ast import Str
 import numpy as np
 import healpy as hp
 import ccgpack as ccg
@@ -54,9 +55,9 @@ class DataCreator():
     1e-9   
     """
 
-    def __init__(self, base_folder='../dataset'):
+    def __init__(self, base_folder='../dataset', write_base_folder='../dataset'):
         self.base_folder = base_folder
-
+        self.write_base_folder = write_base_folder
     def download(self):
         
         # download string maps:
@@ -71,10 +72,10 @@ class DataCreator():
         os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
         os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
 
-    def partitioning(self, val_ratio=0.15, write_base_folder='../dataset'):
+    def partitioning(self, val_ratio=0.15):
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(write_base_folder, str(folder)), exist_ok=True)
+            os.makedirs(os.path.join(self.write_base_folder, str(folder)), exist_ok=True)
 
         # train data:
         for i in [1, 2]:
@@ -92,25 +93,27 @@ class DataCreator():
                         array = cmb_with_string_patchs[k]
                         array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
                         image = Image.fromarray(array)
-                        image.save(f'{write_base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
+                        image.save(f'{self.write_base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
 
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.base_folder, 'test', str(folder)), exist_ok=True)
+            os.makedirs(os.path.join(self.write_base_folder, 'test', str(folder)), exist_ok=True)
 
         # test data:
         for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-            string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1, verbose=0)
-            gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1, verbose=0)
+            string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
+            gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1)
 
             cmb_with_string = gaussian_map + g_mu*string_map
 
             cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
             for i in range(768):
-                image = Image.fromarray(cmb_with_string_patchs[i])
-                image.save(f'{self.base_folder}/test/{g_mu}/{i}_3_4_{g_mu}.png')
+                array = cmb_with_string_patchs[i]
+                array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
+                image = Image.fromarray(array)
+                image.save(f'{self.write_base_folder}/test/{g_mu}/{i}_3_4_{g_mu}.png')
 
 
         folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
@@ -119,7 +122,7 @@ class DataCreator():
 
         for folder in folders:
 
-            train_files, val_files = train_val_spliter(self.base_folder, folder, val_ratio)
+            train_files, val_files = train_val_spliter(self.write_base_folder, folder, val_ratio)
 
             for train in train_files:
                 partition['train'].append(train)
@@ -168,16 +171,16 @@ class DataCreator():
                 else :
                     labels[val] = '9'
 
-            test_dirs = np.array(glob(os.path.join(self.base_folder, 'test', folder, '*')))
+            test_dirs = np.array(glob(os.path.join(self.write_base_folder, 'test', folder, '*')))
 
-            test_folder = os.path.join(self.base_folder, folder, 'test')
+            test_folder = os.path.join(self.write_base_folder, folder, 'test')
 
             os.makedirs(test_folder, exist_ok=True)
 
             for test_dir in test_dirs:
                 shutil.move(test_dir, test_folder)
 
-            test_files = [f'{self.base_folder}/{folder}/test/{name}' for name in os.listdir(test_folder)]
+            test_files = [f'{self.write_base_folder}/{folder}/test/{name}' for name in os.listdir(test_folder)]
 
             for test in test_files:
                 partition['test'].append(test)
@@ -208,9 +211,9 @@ class DataCreator():
         
         for label in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
 
-            n_train = len(os.listdir(os.path.join(self.base_folder, f'{label}','train')))
-            n_val = len(os.listdir(os.path.join(self.base_folder, f'{label}','val')))
-            n_test = len(os.listdir(os.path.join(self.base_folder, f'{label}','test')))
+            n_train = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','train')))
+            n_val = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','val')))
+            n_test = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','test')))
 
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
 
