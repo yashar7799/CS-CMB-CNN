@@ -71,18 +71,18 @@ class DataCreator():
         os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
         os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
 
-    def partitioning(self, val_ratio=0.15):
+    def partitioning(self, val_ratio=0.15, write_base_folder='../dataset'):
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.base_folder, str(folder)), exist_ok=True)
+            os.makedirs(os.path.join(write_base_folder, str(folder)), exist_ok=True)
 
         # train data:
         for i in [1, 2]:
             for j in [0, 1, 2, 3]:
                 for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-                    string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_{i}.fits', nest=1, verbose=0)
-                    gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{j}.fits', nest=1, verbose=0)
+                    string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_{i}.fits', nest=1)
+                    gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{j}.fits', nest=1)
 
                     cmb_with_string = gaussian_map + g_mu*string_map
 
@@ -92,7 +92,7 @@ class DataCreator():
                         array = cmb_with_string_patchs[k]
                         array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
                         image = Image.fromarray(array)
-                        image.save(f'{self.base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
+                        image.save(f'{write_base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
 
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:

@@ -64,8 +64,6 @@ class DataGenerator(Sequence):
         preprocessed image ready for prediction
         """
         image = Image.open(image_path)
-        if self.gray_scale:
-          image = ImageOps.grayscale(image)
         image = img_to_array(image)
         image = smart_resize(image, self.dim)
         image = im.per_image_standardization(image)
