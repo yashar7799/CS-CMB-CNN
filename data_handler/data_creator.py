@@ -32,16 +32,16 @@ class DataCreator():
     def download(self):
         
         # download string maps:
-        os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -c -O {self.base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
-        os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -c -O {self.base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
-        os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -c -O {self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
+        os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -O {self.base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
+        os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -O {self.base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
+        os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -O {self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
 
         # download gaussian maps:
-        os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -c -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
-        os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -c -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
-        os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -c -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
-        os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -c -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
-        os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -c -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
+        os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
+        os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
+        os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
+        os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
+        os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
 
     def partitioning(self, val_ratio=0.15):
 
