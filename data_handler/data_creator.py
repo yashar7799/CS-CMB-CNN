@@ -33,27 +33,27 @@ class DataCreator():
 
     def download(self):
         
-        os.makedirs(f'{self.download_base_folder}', exist_ok=True)
+        os.makedirs(f'{self.download_base_folder}/raw_data', exist_ok=True)
 
         # download string maps:
         if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits'):
-            os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
+            os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -O {self.download_base_folder}/raw_data/map1n_allz_rtaapixlw_2048_1.fits')
         if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits'):
-            os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
+            os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -O {self.download_base_folder}/raw_data/map1n_allz_rtaapixlw_2048_2.fits')
         if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits'):
-            os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
+            os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -O {self.download_base_folder}/raw_data/map1n_allz_rtaapixlw_2048_3.fits')
 
         # download gaussian maps:
         if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits'):
-            os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
+            os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -O {self.download_base_folder}/raw_data/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
         if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits'):
-            os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
+            os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -O {self.download_base_folder}/raw_data/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
         if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits'):
-            os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
+            os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -O {self.download_base_folder}/raw_data/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
         if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits'):
-            os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
+            os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.download_base_folder}/raw_data/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
         if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits'):
-            os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
+            os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.download_base_folder}/raw_data/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
 
     def create(self):
 
@@ -212,16 +212,20 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
     os.makedirs(test_folder, exist_ok=True)
     
     np.random.shuffle(dirs)
+    np.random.shuffle(test_dirs)
     train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
     for train_dir in train_dirs:
-        shutil.copy(train_dir, train_folder)
+        if not os.path.isfile(train_dir):
+            shutil.copy(train_dir, train_folder)
     for val_dir in val_dirs:
-        shutil.copy(val_dir, val_folder)
+        if not os.path.isfile(val_dir):
+            shutil.copy(val_dir, val_folder)
     for test_dir in test_dirs:
-        shutil.copy(test_dir, test_folder)
+        if not os.path.isfile(test_dir):
+            shutil.copy(test_dir, test_folder)
 
-    train_files = [f'{partitioning_base_folder}/{folder}/train/{name}' for name in os.listdir(train_folder)]
-    val_files = [f'{partitioning_base_folder}/{folder}/val/{name}' for name in os.listdir(val_folder)]
-    test_files = [f'{partitioning_base_folder}/{folder}/test/{name}' for name in os.listdir(test_folder)]
+    train_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'train', '*')))
+    val_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'val', '*')))
+    test_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'test', '*')))
 
     return train_files, val_files, test_files
