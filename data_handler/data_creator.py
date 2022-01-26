@@ -1,4 +1,3 @@
-from ast import Str
 import numpy as np
 import healpy as hp
 import ccgpack as ccg
@@ -6,7 +5,6 @@ import os
 import shutil
 from glob import glob
 from PIL import Image
-import cv2
 
 
 class DataCreator():
@@ -26,68 +24,82 @@ class DataCreator():
     1e-9   
     """
 
-    def __init__(self, base_folder='../dataset', write_base_folder='../dataset'):
-        self.base_folder = base_folder
-        self.write_base_folder = write_base_folder
+    def __init__(self, download_base_folder='./dataset', create_base_folder='/content/drive/MyDrive', partitioning_base_folder='./dataset'):
+        
+        self.download_base_folder = download_base_folder
+        self.create_base_folder = create_base_folder
+        self.partitioning_base_folder = partitioning_base_folder
+
     def download(self):
         
+        os.makedirs(f'{self.download_base_folder}', exist_ok=True)
+
         # download string maps:
-        os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -O {self.base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
-        os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -O {self.base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
-        os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -O {self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits'):
+            os.system(f'gdown --id 15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits'):
+            os.system(f'gdown --id 1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits'):
+            os.system(f'gdown --id 1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0 -O {self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
 
         # download gaussian maps:
-        os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
-        os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
-        os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
-        os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
-        os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits'):
+            os.system(f'gdown --id 1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits'):
+            os.system(f'gdown --id 1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits'):
+            os.system(f'gdown --id 1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162 -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits'):
+            os.system(f'gdown --id 1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
+        if not os.path.isfile(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits'):
+            os.system(f'gdown --id 1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4 -O {self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
 
-    def partitioning(self, val_ratio=0.15):
+    def create(self):
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.write_base_folder, str(folder)), exist_ok=True)
+            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(folder)), exist_ok=True)
 
-        # train data:
-        for i in [1, 2]:
-            for j in [0, 1, 2, 3]:
+        # train & val data: mixed at first; will be seperated later at partitioning method.
+        for s in [1, 2]:
+            for g in [0, 1, 2, 3]:
                 for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-                    string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_{i}.fits', nest=1)
-                    gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{j}.fits', nest=1)
+                    string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_{s}.fits', nest=1)
+                    gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{g}.fits', nest=1)
 
-                    cmb_with_string = gaussian_map + g_mu*string_map
+                    cmb_with_string = gaussian_map + g_mu * string_map
 
                     cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
-                    for k in range(768):
-                        if not os.path.isfile(f'{self.write_base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png'):
-                            array = cmb_with_string_patchs[k]
+                    for n in range(768):
+                        if not os.path.isfile(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png'):
+                            array = cmb_with_string_patchs[n]
                             array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
                             image = Image.fromarray(array)
-                            image.save(f'{self.write_base_folder}/{g_mu}/{k}_{i}_{j}_{g_mu}.png')
+                            image.save(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png')
 
 
         for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.write_base_folder, 'test', str(folder)), exist_ok=True)
+            os.makedirs(os.path.join(self.create_base_folder, 'test', str(folder)), exist_ok=True)
 
-        # test data:
+        # test data: completely seperated from raw data.
         for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
 
-            string_map = hp.read_map(f'{self.base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
-            gaussian_map = hp.read_map(f'{self.base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1)
+            string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
+            gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1)
 
-            cmb_with_string = gaussian_map + g_mu*string_map
+            cmb_with_string = gaussian_map + g_mu * string_map
 
             cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
-            for i in range(768):
-                if not os.path.isfile(f'{self.write_base_folder}/test/{g_mu}/{i}_3_4_{g_mu}.png'):
-                    array = cmb_with_string_patchs[i]
+            for n in range(768):
+                if not os.path.isfile(f'{self.create_base_folder}/test/{g_mu}/{n}_3_4_{g_mu}.png'):
+                    array = cmb_with_string_patchs[n]
                     array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
                     image = Image.fromarray(array)
-                    image.save(f'{self.write_base_folder}/test/{g_mu}/{i}_3_4_{g_mu}.png')
+                    image.save(f'{self.create_base_folder}/test/{g_mu}/{n}_3_4_{g_mu}.png')
 
+    def partitioning(self, val_ratio=0.15):
 
         folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
         partition = {'train':[], 'val':[], 'test':[]}
@@ -95,7 +107,7 @@ class DataCreator():
 
         for folder in folders:
 
-            train_files, val_files = train_val_spliter(self.write_base_folder, folder, val_ratio)
+            train_files, val_files, test_files = train_val_test_spliter(self.create_base_folder, self.partitioning_base_folder, folder, val_ratio)
 
             for train in train_files:
                 partition['train'].append(train)
@@ -120,7 +132,6 @@ class DataCreator():
                 else :
                     labels[train] = '9'
 
-
             for val in val_files:
                 partition['val'].append(val)
                 if folder == '0':
@@ -143,17 +154,6 @@ class DataCreator():
                     labels[val] = '8'
                 else :
                     labels[val] = '9'
-
-            test_dirs = np.array(glob(os.path.join(self.write_base_folder, 'test', folder, '*')))
-
-            test_folder = os.path.join(self.write_base_folder, folder, 'test')
-
-            os.makedirs(test_folder, exist_ok=True)
-
-            for test_dir in test_dirs:
-                shutil.move(test_dir, test_folder)
-
-            test_files = [f'{self.write_base_folder}/{folder}/test/{name}' for name in os.listdir(test_folder)]
 
             for test in test_files:
                 partition['test'].append(test)
@@ -184,9 +184,9 @@ class DataCreator():
         
         for label in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
 
-            n_train = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','train')))
-            n_val = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','val')))
-            n_test = len(os.listdir(os.path.join(self.write_base_folder, f'{label}','test')))
+            n_train = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','train')))
+            n_val = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','val')))
+            n_test = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','test')))
 
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
 
@@ -197,27 +197,30 @@ class DataCreator():
 
 
 
+def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder, val_ratio):
 
+    dirs = np.array(glob(os.path.join(create_base_folder, 'train_and_val', folder, '*')))
+    test_dirs = np.array(glob(os.path.join(create_base_folder, 'test', folder, '*')))
 
+    train_folder = os.path.join(partitioning_base_folder, folder, 'train')
+    val_folder = os.path.join(partitioning_base_folder, folder, 'val')
+    test_folder = os.path.join(partitioning_base_folder, folder, 'test')
 
-
-def train_val_spliter(base_folder, folder, val_ratio):
-    dirs = np.array(glob(os.path.join(base_folder, folder, '*')))
-
-    train_folder = os.path.join(base_folder, folder, 'train')
-    val_folder = os.path.join(base_folder, folder, 'val')
-
-    os.mkdir(train_folder)
-    os.mkdir(val_folder)
+    os.makedirs(train_folder, exist_ok=True)
+    os.makedirs(val_folder, exist_ok=True)
+    os.makedirs(test_folder, exist_ok=True)
     
     np.random.shuffle(dirs)
     train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
     for train_dir in train_dirs:
-        shutil.move(train_dir, train_folder)
+        shutil.copy(train_dir, train_folder)
     for val_dir in val_dirs:
-        shutil.move(val_dir, val_folder)
+        shutil.copy(val_dir, val_folder)
+    for test_dir in test_dirs:
+        shutil.copy(test_dir, test_folder)
 
-    train_files = [f'{base_folder}/{folder}/train/{name}' for name in os.listdir(train_folder)]
-    val_files = [f'{base_folder}/{folder}/val/{name}' for name in os.listdir(val_folder)]
+    train_files = [f'{partitioning_base_folder}/{folder}/train/{name}' for name in os.listdir(train_folder)]
+    val_files = [f'{partitioning_base_folder}/{folder}/val/{name}' for name in os.listdir(val_folder)]
+    test_files = [f'{partitioning_base_folder}/{folder}/test/{name}' for name in os.listdir(test_folder)]
 
-    return train_files, val_files
+    return train_files, val_files, test_files
