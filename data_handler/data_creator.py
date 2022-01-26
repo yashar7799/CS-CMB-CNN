@@ -5,6 +5,7 @@ import os
 import shutil
 from glob import glob
 from PIL import Image
+from tqdm import tqdm
 
 
 class DataCreator():
@@ -24,7 +25,7 @@ class DataCreator():
     1e-9   
     """
 
-    def __init__(self, download_base_folder='./dataset', create_base_folder='/content/drive/MyDrive', partitioning_base_folder='./dataset'):
+    def __init__(self, download_base_folder='./dataset', create_base_folder='/content/drive/MyDrive/CS-CMB-CNN-data', partitioning_base_folder='./dataset'):
         
         self.download_base_folder = download_base_folder
         self.create_base_folder = create_base_folder
@@ -60,9 +61,9 @@ class DataCreator():
             os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(folder)), exist_ok=True)
 
         # train & val data: mixed at first; will be seperated later at partitioning method.
-        for s in [1, 2]:
-            for g in [0, 1, 2, 3]:
-                for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+        for s in tqdm([1, 2], 'number of string map used in data creation process, for train and val data.'):
+            for g in tqdm([0, 1, 2, 3], 'number of gaussian map used in data creation process, for train and val data.'):
+                for g_mu in tqdm([0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9], 'number of created classes, for train and val data.'):
 
                     string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_{s}.fits', nest=1)
                     gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{g}.fits', nest=1)
@@ -71,7 +72,7 @@ class DataCreator():
 
                     cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
-                    for n in range(768):
+                    for n in tqdm(range(768), 'number of created images of each class, for train and val data.'):
                         if not os.path.isfile(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png'):
                             array = cmb_with_string_patchs[n]
                             array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
@@ -83,7 +84,7 @@ class DataCreator():
             os.makedirs(os.path.join(self.create_base_folder, 'test', str(folder)), exist_ok=True)
 
         # test data: completely seperated from raw data.
-        for g_mu in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+        for g_mu in tqdm([0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9], 'number of created classes, for test data.'):
 
             string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
             gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1)
@@ -92,7 +93,7 @@ class DataCreator():
 
             cmb_with_string_patchs = ccg.sky2patch(cmb_with_string, 8)
 
-            for n in range(768):
+            for n in tqdm(range(768), 'number of created images of each class, for test data.'):
                 if not os.path.isfile(f'{self.create_base_folder}/test/{g_mu}/{n}_3_4_{g_mu}.png'):
                     array = cmb_with_string_patchs[n]
                     array = ((array - array.min()) * (1/(array.max() - array.min()) * 255)).astype('uint8')
