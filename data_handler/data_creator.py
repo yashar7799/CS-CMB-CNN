@@ -110,6 +110,8 @@ class DataCreator():
 
         for folder in folders:
 
+            shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
+
             train_files, val_files, test_files = train_val_test_spliter(self.create_base_folder, self.partitioning_base_folder, folder, val_ratio)
 
             for train in train_files:
@@ -204,8 +206,6 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
 
     dirs = np.array(glob(os.path.join(create_base_folder, 'train_and_val', folder, '*')))
     test_dirs = np.array(glob(os.path.join(create_base_folder, 'test', folder, '*')))
-
-    shutil.rmtree(os.path.join(partitioning_base_folder, folder), ignore_errors=True)
 
     train_folder = os.path.join(partitioning_base_folder, folder, 'train')
     val_folder = os.path.join(partitioning_base_folder, folder, 'val')
