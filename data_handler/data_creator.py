@@ -106,12 +106,14 @@ class DataCreator():
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        # shutil.rmtree(os.path.join(self.partitioning_base_folder), ignore_errors=True)
+        
 
         for folder in folders:
 
             dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
             test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
+
+            shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
 
             train_folder = os.path.join(self.partitioning_base_folder, folder, 'train')
             val_folder = os.path.join(self.partitioning_base_folder, folder, 'val')
