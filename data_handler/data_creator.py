@@ -106,7 +106,7 @@ class DataCreator():
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        shutil.rmtree(os.path.join(self.partitioning_base_folder), ignore_errors=True)
+        # shutil.rmtree(os.path.join(self.partitioning_base_folder), ignore_errors=True)
 
         for folder in folders:
 
@@ -115,71 +115,71 @@ class DataCreator():
             for train in train_files:
                 partition['train'].append(train)
                 if folder == '0':
-                    labels[train] = '0'
+                    labels[train] = 0
                 elif folder == '1e-5':
-                    labels[train] = '1'
+                    labels[train] = 1
                 elif folder == '5e-6':
-                    labels[train] = '2'
+                    labels[train] = 2
                 elif folder == '1e-6':
-                    labels[train] = '3'
+                    labels[train] = 3
                 elif folder == '5e-7':
-                    labels[train] = '4'
+                    labels[train] = 4
                 elif folder == '1e-7':
-                    labels[train] = '5'
+                    labels[train] = 5
                 elif folder == '5e-8':
-                    labels[train] = '6'
+                    labels[train] = 6
                 elif folder == '1e-8':
-                    labels[train] = '7'
+                    labels[train] = 7
                 elif folder == '5e-9':
-                    labels[train] = '8'
+                    labels[train] = 8
                 else :
-                    labels[train] = '9'
+                    labels[train] = 9
 
             for val in val_files:
                 partition['val'].append(val)
                 if folder == '0':
-                    labels[val] = '0'
+                    labels[val] = 0
                 elif folder == '1e-5':
-                    labels[val] = '1'
+                    labels[val] = 1
                 elif folder == '5e-6':
-                    labels[val] = '2'
+                    labels[val] = 2
                 elif folder == '1e-6':
-                    labels[val] = '3'
+                    labels[val] = 3
                 elif folder == '5e-7':
-                    labels[val] = '4'
+                    labels[val] = 4
                 elif folder == '1e-7':
-                    labels[val] = '5'
+                    labels[val] = 5
                 elif folder == '5e-8':
-                    labels[val] = '6'
+                    labels[val] = 6
                 elif folder == '1e-8':
-                    labels[val] = '7'
+                    labels[val] = 7
                 elif folder == '5e-9':
-                    labels[val] = '8'
+                    labels[val] = 8
                 else :
-                    labels[val] = '9'
+                    labels[val] = 9
 
             for test in test_files:
                 partition['test'].append(test)
                 if folder == '0':
-                    labels[test] = '0'
+                    labels[test] = 0
                 elif folder == '1e-5':
-                    labels[test] = '1'
+                    labels[test] = 1
                 elif folder == '5e-6':
-                    labels[test] = '2'
+                    labels[test] = 2
                 elif folder == '1e-6':
-                    labels[test] = '3'
+                    labels[test] = 3
                 elif folder == '5e-7':
-                    labels[test] = '4'
+                    labels[test] = 4
                 elif folder == '1e-7':
-                    labels[test] = '5'
+                    labels[test] = 5
                 elif folder == '5e-8':
-                    labels[test] = '6'
+                    labels[test] = 6
                 elif folder == '1e-8':
-                    labels[test] = '7'
+                    labels[test] = 7
                 elif folder == '5e-9':
-                    labels[test] = '8'
+                    labels[test] = 8
                 else :
-                    labels[test] = '9'
+                    labels[test] = 9
         
         # print out train/val/test counts:
 
