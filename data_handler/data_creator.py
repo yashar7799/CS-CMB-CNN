@@ -210,9 +210,9 @@ class DataCreator():
         
         for label in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
 
-            n_train = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','train')))
-            n_val = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','val')))
-            n_test = len(os.listdir(os.path.join(self.partitioning_base_folder, f'{label}','test')))
+            n_train = len(os.listdir(os.path.join(self.partitioning_base_folder, label, 'train')))
+            n_val = len(os.listdir(os.path.join(self.partitioning_base_folder, label, 'val')))
+            n_test = len(os.listdir(os.path.join(self.partitioning_base_folder, label, 'test')))
 
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
 
