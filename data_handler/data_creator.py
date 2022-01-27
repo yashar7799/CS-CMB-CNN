@@ -209,9 +209,9 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
     val_folder = os.path.join(partitioning_base_folder, folder, 'val')
     test_folder = os.path.join(partitioning_base_folder, folder, 'test')
 
-    os.mkdir(train_folder)
-    os.mkdir(val_folder)
-    os.mkdir(test_folder)
+    os.makedirs(train_folder, exist_ok=True)
+    os.makedirs(val_folder, exist_ok=True)
+    os.makedirs(test_folder, exist_ok=True)
 
     np.random.shuffle(dirs)
     np.random.shuffle(test_dirs)
