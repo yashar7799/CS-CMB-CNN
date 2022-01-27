@@ -102,11 +102,11 @@ class DataCreator():
 
     def partitioning(self, val_ratio=0.15):
 
-        folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
+        # folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        for folder in folders:
+        for folder in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
 
             dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
             test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
