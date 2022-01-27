@@ -56,8 +56,8 @@ class DataCreator():
 
     def create(self):
 
-        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(folder)), exist_ok=True)
+        for f in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(f)), exist_ok=True)
 
         # train & val data: mixed at first; will be seperated later at partitioning method.
         for s in [1, 2]:
@@ -80,8 +80,8 @@ class DataCreator():
                             image.save(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png')
 
 
-        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'test', str(folder)), exist_ok=True)
+        for f in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+            os.makedirs(os.path.join(self.create_base_folder, 'test', str(f)), exist_ok=True)
 
         # test data: completely seperated from raw data.
         string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
