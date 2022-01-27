@@ -125,10 +125,13 @@ class DataCreator():
             np.random.shuffle(test_dirs)
             train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
             for train_dir in train_dirs:
+                print(train_dir)
                 shutil.copyfile(train_dir, os.path.join(self.partitioning_base_folder, folder, 'train'))
             for val_dir in val_dirs:
+                print(val_dir)
                 shutil.copyfile(val_dir, os.path.join(self.partitioning_base_folder, folder, 'val'))
             for test_dir in test_dirs:
+                print(test_dir)
                 shutil.copyfile(test_dir, os.path.join(self.partitioning_base_folder, folder, 'test'))
 
             train_files = np.array(glob(os.path.join(train_folder, '*')))
