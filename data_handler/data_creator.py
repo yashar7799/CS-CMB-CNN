@@ -1,6 +1,6 @@
 import numpy as np
 import healpy as hp
-# import ccgpack as ccg
+import ccgpack as ccg
 import os
 import shutil
 from glob import glob
