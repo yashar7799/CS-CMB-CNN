@@ -208,23 +208,24 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
     train_folder = os.path.join(partitioning_base_folder, folder, 'train')
     val_folder = os.path.join(partitioning_base_folder, folder, 'val')
     test_folder = os.path.join(partitioning_base_folder, folder, 'test')
+    
+    shutil.rmtree(train_folder, ignore_errors=True)
+    shutil.rmtree(val_folder, ignore_errors=True)
+    shutil.rmtree(test_folder, ignore_errors=True)
 
-    os.makedirs(train_folder, exist_ok=True)
-    os.makedirs(val_folder, exist_ok=True)
-    os.makedirs(test_folder, exist_ok=True)
+    os.mkdir(train_folder)
+    os.mkdir(val_folder)
+    os.mkdir(test_folder)
 
     np.random.shuffle(dirs)
     np.random.shuffle(test_dirs)
     train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
     for train_dir in train_dirs:
-        if not os.path.isfile(os.path.join(train_folder, train_dir.split('/')[-1])):
-            shutil.copy(train_dir, train_folder)
+        shutil.copy(train_dir, train_folder)
     for val_dir in val_dirs:
-        if not os.path.isfile(os.path.join(val_folder, val_dir.split('/')[-1])):
-            shutil.copy(val_dir, val_folder)
+        shutil.copy(val_dir, val_folder)
     for test_dir in test_dirs:
-        if not os.path.isfile(os.path.join(test_folder, test_dir.split('/')[-1])):
-            shutil.copy(test_dir, test_folder)
+        shutil.copy(test_dir, test_folder)
 
     train_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'train', '*')))
     val_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'val', '*')))
