@@ -205,13 +205,11 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
     dirs = np.array(glob(os.path.join(create_base_folder, 'train_and_val', folder, '*')))
     test_dirs = np.array(glob(os.path.join(create_base_folder, 'test', folder, '*')))
 
+    shutil.rmtree(os.path.join(partitioning_base_folder, folder), ignore_errors=True)
+
     train_folder = os.path.join(partitioning_base_folder, folder, 'train')
     val_folder = os.path.join(partitioning_base_folder, folder, 'val')
     test_folder = os.path.join(partitioning_base_folder, folder, 'test')
-    
-    shutil.rmtree(train_folder, ignore_errors=True)
-    shutil.rmtree(val_folder, ignore_errors=True)
-    shutil.rmtree(test_folder, ignore_errors=True)
 
     os.mkdir(train_folder)
     os.mkdir(val_folder)
@@ -227,8 +225,8 @@ def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder,
     for test_dir in test_dirs:
         shutil.copy(test_dir, test_folder)
 
-    train_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'train', '*')))
-    val_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'val', '*')))
-    test_files = np.array(glob(os.path.join(partitioning_base_folder, folder, 'test', '*')))
+    train_files = np.array(glob(os.path.join(train_folder, '*')))
+    val_files = np.array(glob(os.path.join(val_folder, '*')))
+    test_files = np.array(glob(os.path.join(test_folder, '*')))
 
     return train_files, val_files, test_files
