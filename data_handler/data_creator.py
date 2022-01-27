@@ -108,8 +108,7 @@ class DataCreator():
 
         for folder in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
 
-            dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
-            test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
+
 
             shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
 
@@ -121,17 +120,17 @@ class DataCreator():
             os.makedirs(val_folder, exist_ok=True)
             os.makedirs(test_folder, exist_ok=True)
 
+            dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
+            test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
+
             np.random.shuffle(dirs)
             np.random.shuffle(test_dirs)
             train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
             for train_dir in train_dirs:
-                print(train_dir)
                 shutil.copy(train_dir, os.path.join(self.partitioning_base_folder, folder, 'train'))
             for val_dir in val_dirs:
-                print(val_dir)
                 shutil.copy(val_dir, os.path.join(self.partitioning_base_folder, folder, 'val'))
             for test_dir in test_dirs:
-                print(test_dir)
                 shutil.copy(test_dir, os.path.join(self.partitioning_base_folder, folder, 'test'))
 
             train_files = np.array(glob(os.path.join(train_folder, '*')))
