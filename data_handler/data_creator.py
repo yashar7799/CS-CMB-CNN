@@ -1,6 +1,6 @@
 import numpy as np
 import healpy as hp
-import ccgpack as ccg
+# import ccgpack as ccg
 import os
 import shutil
 from glob import glob
@@ -102,8 +102,7 @@ class DataCreator():
 
     def partitioning(self, val_ratio=0.15):
 
-        # folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
-        folders = ['1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
+        folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
