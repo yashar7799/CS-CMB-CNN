@@ -110,7 +110,30 @@ class DataCreator():
 
         for folder in folders:
 
-            train_files, val_files, test_files = train_val_test_spliter(self.create_base_folder, self.partitioning_base_folder, folder, val_ratio)
+            dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
+            test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
+
+            train_folder = os.path.join(self.partitioning_base_folder, folder, 'train')
+            val_folder = os.path.join(self.partitioning_base_folder, folder, 'val')
+            test_folder = os.path.join(self.partitioning_base_folder, folder, 'test')
+
+            os.makedirs(train_folder, exist_ok=True)
+            os.makedirs(val_folder, exist_ok=True)
+            os.makedirs(test_folder, exist_ok=True)
+
+            np.random.shuffle(dirs)
+            np.random.shuffle(test_dirs)
+            train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
+            for train_dir in train_dirs:
+                shutil.copy(train_dir, train_folder)
+            for val_dir in val_dirs:
+                shutil.copy(val_dir, val_folder)
+            for test_dir in test_dirs:
+                shutil.copy(test_dir, test_folder)
+
+            train_files = np.array(glob(os.path.join(train_folder, '*')))
+            val_files = np.array(glob(os.path.join(val_folder, '*')))
+            test_files = np.array(glob(os.path.join(test_folder, '*')))
 
             for train in train_files:
                 partition['train'].append(train)
@@ -194,37 +217,3 @@ class DataCreator():
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
 
         return partition, labels
-
-
-
-
-
-
-def train_val_test_spliter(create_base_folder, partitioning_base_folder, folder, val_ratio):
-
-    dirs = np.array(glob(os.path.join(create_base_folder, 'train_and_val', folder, '*')))
-    test_dirs = np.array(glob(os.path.join(create_base_folder, 'test', folder, '*')))
-
-    train_folder = os.path.join(partitioning_base_folder, folder, 'train')
-    val_folder = os.path.join(partitioning_base_folder, folder, 'val')
-    test_folder = os.path.join(partitioning_base_folder, folder, 'test')
-
-    os.makedirs(train_folder, exist_ok=True)
-    os.makedirs(val_folder, exist_ok=True)
-    os.makedirs(test_folder, exist_ok=True)
-
-    np.random.shuffle(dirs)
-    np.random.shuffle(test_dirs)
-    train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
-    for train_dir in train_dirs:
-        shutil.copy(train_dir, train_folder)
-    for val_dir in val_dirs:
-        shutil.copy(val_dir, val_folder)
-    for test_dir in test_dirs:
-        shutil.copy(test_dir, test_folder)
-
-    train_files = np.array(glob(os.path.join(train_folder, '*')))
-    val_files = np.array(glob(os.path.join(val_folder, '*')))
-    test_files = np.array(glob(os.path.join(test_folder, '*')))
-
-    return train_files, val_files, test_files
