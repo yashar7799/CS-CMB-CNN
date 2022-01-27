@@ -1,4 +1,3 @@
-from cv2 import split
 import numpy as np
 import healpy as hp
 import ccgpack as ccg
@@ -6,7 +5,6 @@ import os
 import shutil
 from glob import glob
 from PIL import Image
-from tqdm import tqdm
 
 
 class DataCreator():
@@ -108,9 +106,9 @@ class DataCreator():
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        for folder in folders:
+        shutil.rmtree(os.path.join(self.partitioning_base_folder), ignore_errors=True)
 
-            shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
+        for folder in folders:
 
             train_files, val_files, test_files = train_val_test_spliter(self.create_base_folder, self.partitioning_base_folder, folder, val_ratio)
 
