@@ -56,8 +56,8 @@ class DataCreator():
 
     def create(self):
 
-        for f in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(f)), exist_ok=True)
+        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(folder)), exist_ok=True)
 
         # train & val data: mixed at first; will be seperated later at partitioning method.
         for s in [1, 2]:
@@ -80,8 +80,8 @@ class DataCreator():
                             image.save(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png')
 
 
-        for f in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'test', str(f)), exist_ok=True)
+        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
+            os.makedirs(os.path.join(self.create_base_folder, 'test', str(folder)), exist_ok=True)
 
         # test data: completely seperated from raw data.
         string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
@@ -102,13 +102,14 @@ class DataCreator():
 
     def partitioning(self, val_ratio=0.15):
 
-        # folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
+        folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        for folder in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
+        for folder in folders:
 
-
+            dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
+            test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
 
             shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
 
@@ -120,18 +121,15 @@ class DataCreator():
             os.makedirs(val_folder, exist_ok=True)
             os.makedirs(test_folder, exist_ok=True)
 
-            dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
-            test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
-
             np.random.shuffle(dirs)
             np.random.shuffle(test_dirs)
             train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
             for train_dir in train_dirs:
-                shutil.copy(train_dir, os.path.join(self.partitioning_base_folder, folder, 'train'))
+                shutil.copy(train_dir, train_folder)
             for val_dir in val_dirs:
-                shutil.copy(val_dir, os.path.join(self.partitioning_base_folder, folder, 'val'))
+                shutil.copy(val_dir, val_folder)
             for test_dir in test_dirs:
-                shutil.copy(test_dir, os.path.join(self.partitioning_base_folder, folder, 'test'))
+                shutil.copy(test_dir, test_folder)
 
             train_files = np.array(glob(os.path.join(train_folder, '*')))
             val_files = np.array(glob(os.path.join(val_folder, '*')))
