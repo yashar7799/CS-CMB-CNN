@@ -3,7 +3,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.utils import Sequence
 from tensorflow.keras.preprocessing.image import img_to_array, smart_resize
 from tensorflow import image as im
-from PIL import Image, ImageOps
+from PIL import Image
 from albumentations import (
     RandomBrightness, RandomContrast, Sharpen, Emboss, PiecewiseAffine,
     ShiftScaleRotate, Blur, OpticalDistortion, GridDistortion, HueSaturationValue,
@@ -17,12 +17,11 @@ class DataGenerator(Sequence):
     Should use data_creator module first, to download and create proper datasets.
     """
 
-    def __init__(self, list_IDs, labels, batch_size=32, dim=(112,112), gray_scale=True,
-                 n_classes=4, shuffle=True, base_folder='../datasets/COVID-19_Radiography_Dataset'):
+    def __init__(self, list_IDs, labels, batch_size=32, dim=(256, 256), n_channels=1, n_classes=10, shuffle=True):
         'Initialization'
-        self.base_folder = base_folder
+
         self.dim = dim
-        self.gray_scale = gray_scale
+        self.n_channels = n_channels
         self.batch_size = batch_size
         self.labels = labels
         self.list_IDs = list_IDs
@@ -61,7 +60,7 @@ class DataGenerator(Sequence):
 
         Returns
         -------
-        preprocessed image ready for prediction
+        preprocessed image ready for learning and prediction.
         """
         image = Image.open(image_path)
         image = img_to_array(image)
@@ -72,11 +71,8 @@ class DataGenerator(Sequence):
     def __data_generation(self, list_IDs_temp):
         'Generates data containing batch_size samples' # X : (n_samples, *dim, n_channels)
         # Initialization
-        if self.gray_scale:
-          n_channels = 1
-        else:
-          n_channels = 3
-        X = np.empty((self.batch_size, *self.dim, n_channels))
+
+        X = np.empty((self.batch_size, *self.dim, self.n_channels))
         y = np.empty((self.batch_size), dtype=int)
 
 
