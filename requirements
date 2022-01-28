@@ -1,3 +1,8 @@
+albumentations
+os
+shutil
+glob
+PIL
 numpy
 scipy
 healpy
@@ -5,3 +10,7 @@ pylab
 git+https://github.com/vafaei-ar/ccgpack.git
 tensorflow
 keras
+sklearn
+seaborn
+argparse
+matplotlib
