@@ -106,10 +106,14 @@ class DataCreator():
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
+        k = 0
         for folder in folders:
 
             dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
             test_dirs = np.array(glob(os.path.join(self.create_base_folder, 'test', folder, '*')))
+
+            print(len(dirs))
+            print(len(test_dirs))
 
             shutil.rmtree(os.path.join(self.partitioning_base_folder, folder), ignore_errors=True)
 
@@ -125,6 +129,7 @@ class DataCreator():
             np.random.shuffle(test_dirs)
             train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
             for train_dir in train_dirs:
+
                 shutil.copy(train_dir, train_folder)
             for val_dir in val_dirs:
                 shutil.copy(val_dir, val_folder)
@@ -203,6 +208,10 @@ class DataCreator():
                     labels[test] = 8
                 else :
                     labels[test] = 9
+
+            k += 1
+            if k == 3:
+              break
 
         # print out train/val/test counts:
 
