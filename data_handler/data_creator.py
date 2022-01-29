@@ -56,7 +56,7 @@ class DataCreator():
 
     def create(self):
 
-        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
+        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']:
             os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', folder), exist_ok=True)
 
         # train & val data: mixed at first; will be seperated later at partitioning method.
@@ -80,7 +80,7 @@ class DataCreator():
                             image.save(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png')
 
 
-        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
+        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']:
             os.makedirs(os.path.join(self.create_base_folder, 'test', folder), exist_ok=True)
 
         # test data: completely seperated from raw data.
@@ -103,7 +103,7 @@ class DataCreator():
     def partitioning(self, val_ratio=0.15):
 
         # folders = ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
-        folders = ['0']
+        folders = ['1e_5']
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
