@@ -56,8 +56,8 @@ class DataCreator():
 
     def create(self):
 
-        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', str(folder)), exist_ok=True)
+        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
+            os.makedirs(os.path.join(self.create_base_folder, 'train_and_val', folder), exist_ok=True)
 
         # train & val data: mixed at first; will be seperated later at partitioning method.
         for s in [1, 2]:
@@ -80,8 +80,8 @@ class DataCreator():
                             image.save(f'{self.create_base_folder}/train_and_val/{g_mu}/{n}_{s}_{g}_{g_mu}.png')
 
 
-        for folder in [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9]:
-            os.makedirs(os.path.join(self.create_base_folder, 'test', str(folder)), exist_ok=True)
+        for folder in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
+            os.makedirs(os.path.join(self.create_base_folder, 'test', folder), exist_ok=True)
 
         # test data: completely seperated from raw data.
         string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
@@ -102,11 +102,11 @@ class DataCreator():
 
     def partitioning(self, val_ratio=0.15):
 
-        folders = ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']
+        # folders = ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']
+        folders = ['0']
         partition = {'train':[], 'val':[], 'test':[]}
         labels = {}
 
-        k = 0
         for folder in folders:
 
             dirs = np.array(glob(os.path.join(self.create_base_folder, 'train_and_val', folder, '*')))
@@ -129,12 +129,11 @@ class DataCreator():
             np.random.shuffle(test_dirs)
             train_dirs, val_dirs = np.split(dirs, [int(len(dirs)* (1 - val_ratio))])
             for train_dir in train_dirs:
-
-                shutil.copy(train_dir, train_folder)
+                shutil.copyfile(train_dir, os.path.join(train_folder, train_dir.split('/')[-1]))
             for val_dir in val_dirs:
-                shutil.copy(val_dir, val_folder)
+                shutil.copyfile(val_dir, os.path.join(val_folder, val_dir.split('/')[-1]))
             for test_dir in test_dirs:
-                shutil.copy(test_dir, test_folder)
+                shutil.copyfile(test_dir, os.path.join(test_folder, test_dir.split('/')[-1]))
 
             train_files = np.array(glob(os.path.join(train_folder, '*')))
             val_files = np.array(glob(os.path.join(val_folder, '*')))
@@ -144,21 +143,21 @@ class DataCreator():
                 partition['train'].append(train)
                 if folder == '0':
                     labels[train] = 0
-                elif folder == '1e-5':
+                elif folder == '1e_5':
                     labels[train] = 1
-                elif folder == '5e-6':
+                elif folder == '5e_6':
                     labels[train] = 2
-                elif folder == '1e-6':
+                elif folder == '1e_6':
                     labels[train] = 3
-                elif folder == '5e-7':
+                elif folder == '5e_7':
                     labels[train] = 4
-                elif folder == '1e-7':
+                elif folder == '1e_7':
                     labels[train] = 5
-                elif folder == '5e-8':
+                elif folder == '5e_8':
                     labels[train] = 6
-                elif folder == '1e-8':
+                elif folder == '1e_8':
                     labels[train] = 7
-                elif folder == '5e-9':
+                elif folder == '5e_9':
                     labels[train] = 8
                 else :
                     labels[train] = 9
@@ -167,21 +166,21 @@ class DataCreator():
                 partition['val'].append(val)
                 if folder == '0':
                     labels[val] = 0
-                elif folder == '1e-5':
+                elif folder == '1e_5':
                     labels[val] = 1
-                elif folder == '5e-6':
+                elif folder == '5e_6':
                     labels[val] = 2
-                elif folder == '1e-6':
+                elif folder == '1e_6':
                     labels[val] = 3
-                elif folder == '5e-7':
+                elif folder == '5e_7':
                     labels[val] = 4
-                elif folder == '1e-7':
+                elif folder == '1e_7':
                     labels[val] = 5
-                elif folder == '5e-8':
+                elif folder == '5e_8':
                     labels[val] = 6
-                elif folder == '1e-8':
+                elif folder == '1e_8':
                     labels[val] = 7
-                elif folder == '5e-9':
+                elif folder == '5e_9':
                     labels[val] = 8
                 else :
                     labels[val] = 9
@@ -190,34 +189,30 @@ class DataCreator():
                 partition['test'].append(test)
                 if folder == '0':
                     labels[test] = 0
-                elif folder == '1e-5':
+                elif folder == '1e_5':
                     labels[test] = 1
-                elif folder == '5e-6':
+                elif folder == '5e_6':
                     labels[test] = 2
-                elif folder == '1e-6':
+                elif folder == '1e_6':
                     labels[test] = 3
-                elif folder == '5e-7':
+                elif folder == '5e_7':
                     labels[test] = 4
-                elif folder == '1e-7':
+                elif folder == '1e_7':
                     labels[test] = 5
-                elif folder == '5e-8':
+                elif folder == '5e_8':
                     labels[test] = 6
-                elif folder == '1e-8':
+                elif folder == '1e_8':
                     labels[test] = 7
-                elif folder == '5e-9':
+                elif folder == '5e_9':
                     labels[test] = 8
                 else :
                     labels[test] = 9
-
-            k += 1
-            if k == 3:
-              break
 
         # print out train/val/test counts:
 
         print('Classes and train/val/test counts:\n')
         
-        for label in ['0', '1e-5', '5e-6', '1e-6', '5e-7', '1e-7', '5e-8', '1e-8', '5e-9', '1e-9']:
+        for label in ['0', '1e_5', '5e_6', '1e_6', '5e_7', '1e_7', '5e_8', '1e_8', '5e_9', '1e_9']:
 
             n_train = len(os.listdir(os.path.join(self.partitioning_base_folder, label, 'train')))
             n_val = len(os.listdir(os.path.join(self.partitioning_base_folder, label, 'val')))
