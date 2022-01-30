@@ -37,23 +37,23 @@ class DataCreator():
 
         # download string maps:
         if not os.path.isfile(f'{download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits'):
-            gdown.download(id='15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits')
+            gdown.download(id='15iwucSA5yqqEf-QtdcNJt2Dviv2L9fny', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_1.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits'):
-            gdown.download(id='1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits')
+            gdown.download(id='1DNaOMEk1zzX_SzEn7Q6YqF91R3W31jRo', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_2.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits'):
-            gdown.download(id='1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits')
+            gdown.download(id='1kL3-MsBGlOiWw4XdUGYrocISh8gejvR0', output=f'{download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', resume=True)
 
         # download gaussian maps:
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits'):
-            gdown.download(id='1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits')
+            gdown.download(id='1atZ0F99rzmsKt3NdnCiOm17mc9B6U7qT', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0000.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits'):
-            gdown.download(id='1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits')
+            gdown.download(id='1VWiXbsYh6M8HkuhorZuonQdXaDW6l3zl', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0001.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits'):
-            gdown.download(id='1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits')
+            gdown.download(id='1XzMrbXe6hWJVZ0paMXm1UYy8fTj7q162', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0002.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits'):
-            gdown.download(id='1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits')
+            gdown.download(id='1Fb7Yj4Pok-k8mSnH2b9pdS07gHofcwxB', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0003.fits', resume=True)
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits'):
-            gdown.download(id='1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits')
+            gdown.download(id='1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', resume=True)
 
     def create(self, g_mu_values:list = [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9], val_ratio:float = 0.15, create_base_folder:str = '/content/drive/MyDrive/CS-CMB-CNN-data'):
 
@@ -117,7 +117,7 @@ class DataCreator():
                     image = Image.fromarray(array)
                     image.save(f'{create_base_folder}/test/{g_mu_str}/{n}_3_4_{g_mu_str}.png')
 
-    def partitioning(self, partitioning_base_folder='./dataset'):
+    def partitioning(self, partitioning_base_folder:str = './dataset'):
 
         train_classes = sorted(os.listdir(os.path.join(partitioning_base_folder, 'train')))
         val_classes = sorted(os.listdir(os.path.join(partitioning_base_folder, 'val')))
@@ -155,9 +155,9 @@ class DataCreator():
         
         for label in folders:
 
-            n_train = len(os.listdir(os.path.join(partitioning_base_folder, label, 'train')))
-            n_val = len(os.listdir(os.path.join(partitioning_base_folder, label, 'val')))
-            n_test = len(os.listdir(os.path.join(partitioning_base_folder, label, 'test')))
+            n_train = len(os.listdir(os.path.join(partitioning_base_folder, 'train', label)))
+            n_val = len(os.listdir(os.path.join(partitioning_base_folder, 'val', label)))
+            n_test = len(os.listdir(os.path.join(partitioning_base_folder, 'test', label)))
 
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
 
