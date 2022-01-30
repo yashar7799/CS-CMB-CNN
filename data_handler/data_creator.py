@@ -78,7 +78,7 @@ class DataCreator():
                 string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_{s}.fits', nest=1)
                 gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_000{g}.fits', nest=1)
 
-                for g_mu, g_mu_str in zip(g_mu_values, folders):
+                for g_mu, g_mu_str in list(zip(g_mu_values, folders)):
 
                     cmb_with_string = gaussian_map + g_mu * string_map
 
@@ -104,7 +104,7 @@ class DataCreator():
         string_map = hp.read_map(f'{self.download_base_folder}/map1n_allz_rtaapixlw_2048_3.fits', nest=1)
         gaussian_map = hp.read_map(f'{self.download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', nest=1)
 
-        for g_mu, g_mu_str in zip(g_mu_values, folders):
+        for g_mu, g_mu_str in list(zip(g_mu_values, folders)):
 
             cmb_with_string = gaussian_map + g_mu * string_map
 
