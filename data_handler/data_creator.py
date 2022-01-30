@@ -66,8 +66,6 @@ class DataCreator():
                 l = str(g_mu).split('-')
                 folders.append(l[0] + '_' + l[1])
 
-        paralell_list= 
-
         for folder in folders:
             os.makedirs(os.path.join(create_base_folder, 'train', folder), exist_ok=True)
             os.makedirs(os.path.join(create_base_folder, 'val', folder), exist_ok=True)
