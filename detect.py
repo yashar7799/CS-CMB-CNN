@@ -1,4 +1,3 @@
-
 """
 This module is to call model and give it the input image; then get the output image(s)
     from it and pass the output image to the streamlit ui.
