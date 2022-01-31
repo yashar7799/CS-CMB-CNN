@@ -1,7 +1,4 @@
 albumentations
-os
-shutil
-glob
 PIL
 numpy
 scipy
@@ -12,7 +9,6 @@ tensorflow
 keras
 sklearn
 seaborn
-argparse
 matplotlib
 gdown
 mlflow>=1.20.2
