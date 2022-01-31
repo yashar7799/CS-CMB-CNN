@@ -1,5 +1,5 @@
 albumentations
-PIL
+pillow
 numpy
 scipy
 healpy
