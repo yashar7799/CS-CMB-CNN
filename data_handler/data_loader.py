@@ -4,11 +4,11 @@ from tensorflow.keras.utils import Sequence
 from tensorflow.keras.preprocessing.image import img_to_array, smart_resize
 from tensorflow import image as im
 from PIL import Image
-from albumentations import (
-    RandomBrightness, RandomContrast, Sharpen, Emboss, PiecewiseAffine,
-    ShiftScaleRotate, Blur, OpticalDistortion, GridDistortion, HueSaturationValue,
-    GaussNoise, MotionBlur, MedianBlur, Flip, OneOf, Compose, ElasticTransform 
-)
+# from albumentations import (
+#     RandomBrightness, RandomContrast, Sharpen, Emboss, PiecewiseAffine,
+#     ShiftScaleRotate, Blur, OpticalDistortion, GridDistortion, HueSaturationValue,
+#     GaussNoise, MotionBlur, MedianBlur, Flip, OneOf, Compose, ElasticTransform 
+# )
 
 class DataGenerator(Sequence):
 
