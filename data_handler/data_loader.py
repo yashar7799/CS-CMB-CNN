@@ -88,27 +88,27 @@ class DataGenerator(Sequence):
 
         return X, to_categorical(y, num_classes=self.n_classes)
 
-    @staticmethod
-    def aug_func(p=0.5):
-        return Compose([Flip(p=0.5),
-                        GaussNoise(p=0.2),
-                        OneOf([
-                            MotionBlur(p=.2),
-                            MedianBlur(blur_limit=3, p=.1),
-                            Blur(blur_limit=3, p=.1),
-                        ], p=0.2),
-                        ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.2, rotate_limit=45, p=.2),
-                        OneOf([
-                            OpticalDistortion(p=0.3),
-                            GridDistortion(p=.1),
-                            PiecewiseAffine(p=0.3),
-                            ElasticTransform(p=0.3, alpha=20, sigma=60 * 0.05, alpha_affine=60 * 0.03)
-                        ], p=0.2),
-                        OneOf([
-                            Sharpen(),
-                            Emboss(),
-                            RandomContrast(),
-                            RandomBrightness(),
-                        ], p=0.3),
-                        HueSaturationValue(p=0.3),
-                        ], p=p)
+    # @staticmethod
+    # def aug_func(p=0.5):
+    #     return Compose([Flip(p=0.5),
+    #                     GaussNoise(p=0.2),
+    #                     OneOf([
+    #                         MotionBlur(p=.2),
+    #                         MedianBlur(blur_limit=3, p=.1),
+    #                         Blur(blur_limit=3, p=.1),
+    #                     ], p=0.2),
+    #                     ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.2, rotate_limit=45, p=.2),
+    #                     OneOf([
+    #                         OpticalDistortion(p=0.3),
+    #                         GridDistortion(p=.1),
+    #                         PiecewiseAffine(p=0.3),
+    #                         ElasticTransform(p=0.3, alpha=20, sigma=60 * 0.05, alpha_affine=60 * 0.03)
+    #                     ], p=0.2),
+    #                     OneOf([
+    #                         Sharpen(),
+    #                         Emboss(),
+    #                         RandomContrast(),
+    #                         RandomBrightness(),
+    #                     ], p=0.3),
+    #                     HueSaturationValue(p=0.3),
+    #                     ], p=p)
