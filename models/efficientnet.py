@@ -1,12 +1,12 @@
 from typing import Tuple
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.applications import EfficientNetB0
+from tensorflow.keras.applications import efficientnet
 from tensorflow.keras.layers import Dense, Dropout, Conv2D, Flatten
 
 
 
 
-class EfficientNet():
+class EfficientNetB0():
 
     """
     The efficientNetB0 model
@@ -40,7 +40,7 @@ class EfficientNet():
         else:
             weights=None
 
-        efficient_net = EfficientNetB0(input_shape= (self.input_shape[0], self.input_shape[1],3) , include_top=False, pooling='max', weights=weights)
+        efficient_net = efficientnet.EfficientNetB0(input_shape= (self.input_shape[0], self.input_shape[1],3) , include_top=False, pooling='max', weights=weights)
         model = Sequential()
         model.add(Conv2D(3, 1, activation='relu', padding='same', input_shape=self.input_shape))
         model.add(efficient_net)

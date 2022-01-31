@@ -1,10 +1,10 @@
 from typing import Tuple
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
+from tensorflow.keras.applications import mobilenet_v2
 from tensorflow.keras.layers import Dense, Dropout, Conv2D, Flatten
 
 
-class MobileNet():
+class MobileNetV2():
 
     """
     The mobileNetV2 model
@@ -15,6 +15,7 @@ class MobileNet():
                  num_classes: int = 10,
                  pre_trained: bool = False,
                  model_path: str = None,
+                 dropout: float = 0.4,
                  imagenet_weights: bool=False):
 
         """
@@ -28,6 +29,7 @@ class MobileNet():
         self.num_classes = num_classes
         self.pre_trained = pre_trained
         self.imagenet_weights = imagenet_weights
+        self.dropout = dropout
 
     def get_model(self):
         """ model loader """
@@ -37,13 +39,13 @@ class MobileNet():
         else:
             weights=None
 
-        mobile = MobileNetV2(input_shape= (self.input_shape[0], self.input_shape[1],3) ,  include_top=False, pooling='max', weights=weights)
+        mobile = mobilenet_v2.MobileNetV2(input_shape= (self.input_shape[0], self.input_shape[1],3) ,  include_top=False, pooling='max', weights=weights)
         model = Sequential()
         model.add(Conv2D(3, 1, activation='relu', padding='same', input_shape=self.input_shape))
         model.add(mobile)
-        # model.add(Flatten())
-        # model.add(Dense(128, activation='relu'))
-        # model.add(Dropout(0.2))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu'))
+        model.add(Dropout(self.dropout))
         model.add(Dense(self.num_classes, activation='sigmoid'))
 
         if self.pre_trained:
