@@ -9,18 +9,23 @@ from .mobilenet import MobileNetV2
 from .efficientnet import EfficientNetB0
 from .resnet import ResNet18, ResNet50, ResNet50V2
 from .densenet import DenseNet121
+from .inception import InceptionV3
+from .nasnet import NASNetMobile
+from .vgg import VGG16, VGG19
+from .xception import Xception
 
 MODELS = dict(
     densenet=DenseNet121,
     efficientnet=EfficientNetB0,
-    # inception=inception,
+    inception=InceptionV3,
     mobilenet=MobileNetV2,
-    # nasnet=nasnet,
+    nasnet=NASNetMobile,
     resnet18=ResNet18,
     resnet50=ResNet50,
-    resnet50v2=ResNet50V2
-    # vgg=vgg,
-    # xception=xception
+    resnet50v2=ResNet50V2,
+    vgg16=VGG16,
+    vgg19=VGG19,
+    xception=Xception
 )
 
 

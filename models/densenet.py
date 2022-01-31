@@ -15,6 +15,7 @@ class DenseNet121():
                  num_classes: int = 10,
                  pre_trained: bool = False,
                  model_path: str = None,
+                 dropout: float = 0.4,
                  imagenet_weights: bool=False):
 
         """
@@ -28,6 +29,7 @@ class DenseNet121():
         self.num_classes = num_classes
         self.pre_trained = pre_trained
         self.imagenet_weights = imagenet_weights
+        self.dropout = dropout
 
     def get_model(self):
         """ model loader """
@@ -41,9 +43,9 @@ class DenseNet121():
         model = Sequential()
         model.add(Conv2D(3, 1, activation='relu', padding='same', input_shape=self.input_shape))
         model.add(dense)
-        # model.add(Flatten())
-        # model.add(Dense(128, activation='relu'))
-        # model.add(Dropout(0.2))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu'))
+        model.add(Dropout(self.dropout))
         model.add(Dense(self.num_classes, activation='sigmoid'))
 
         if self.pre_trained:
