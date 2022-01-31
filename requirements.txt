@@ -15,3 +15,4 @@ seaborn
 argparse
 matplotlib
 gdown
+mlflow>=1.20.2

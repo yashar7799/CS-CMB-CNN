@@ -1,6 +1,3 @@
-# Copyright 2021 The AI-Medic\Cell-Segmentation Authors. All Rights Reserved.
-# License stuff will be written here later...
-
 """
 This is the main module of this project ; here we difine a function to start training process.
 """
@@ -13,7 +10,7 @@ from datetime import datetime
 from os.path import join
 from models import load_model
 from params import get_args
-from data.data_loader import get_loader
+from data_handler.data_loader import DataGenerator
 from tensorflow.keras.optimizers import Adam
 from utils.callbacks import get_callbacks
 from utils.mlflow_handler import MLFlowHandler
@@ -52,7 +49,7 @@ def train():
                                    run_ngrok=args.run_ngrok)
     mlflow_handler.start_run(args)
 
-    train_loader, val_loader, test_loader = get_loader(batch_size=args.batch_size,
+    train_loader, val_loader, test_loader = DataGenerator(batch_size=args.batch_size,
                                                        train_dir=args.train_dir,
                                                        test_dir=args.test_dir,
                                                        val_dir=args.val_dir,
