@@ -1,6 +1,3 @@
-# Copyright 2021 The AI-Medic\Cell-Segmentation Authors. All Rights Reserved.
-# License stuff will be written here later...
-
 """
 This module is to call model and give it the input image; then get the output image(s)
     from it and pass the output image to the streamlit ui.
