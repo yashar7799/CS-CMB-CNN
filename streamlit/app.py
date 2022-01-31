@@ -1,6 +1,3 @@
-# Copyright 2021 The AI-Medic\Cell-Segmentation Authors. All Rights Reserved.
-# License stuff will be written here later...
-
 """
 This module contains everything needed to setup a streamlit ui.
 """
