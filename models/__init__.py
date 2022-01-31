@@ -5,20 +5,22 @@ this modules contain following Functions:
     -   load_model
 """
 
-from .densenet import UNet as Unet
-from .unet_pretrain import UNet as UnetPR
-from .unet_batch_normalization import UNet as UnetBN
-from .deeplabv3plus_resnet import DeepLabV3Plus as deeplabv3plus_resnet
+from .mobilenet import MobileNetV2
+from .efficientnet import EfficientNetB0
+from .resnet import ResNet18, ResNet50, ResNet50V2
+from .densenet import DenseNet121
 
 MODELS = dict(
-    densenet=densenet,
-    efficientnet=efficientnet,
-    inception=inception,
-    mobilenet=mobilenet,
-    nasnet=nasnet,
-    resnet=resnet,
-    vgg=vgg,
-    xception=xception
+    densenet=DenseNet121,
+    efficientnet=EfficientNetB0,
+    # inception=inception,
+    mobilenet=MobileNetV2,
+    # nasnet=nasnet,
+    resnet18=ResNet18,
+    resnet50=ResNet50,
+    resnet50v2=ResNet50V2
+    # vgg=vgg,
+    # xception=xception
 )
 
 
