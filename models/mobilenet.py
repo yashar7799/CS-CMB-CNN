@@ -46,7 +46,7 @@ class MobileNetV2():
         model.add(Flatten())
         model.add(Dense(128, activation='relu'))
         model.add(Dropout(self.dropout))
-        model.add(Dense(self.num_classes, activation='sigmoid'))
+        model.add(Dense(self.num_classes, activation='softmax'))
 
         if self.pre_trained:
             model.load_weights(self.model_path)
