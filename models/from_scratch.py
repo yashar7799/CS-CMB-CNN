@@ -1,7 +1,10 @@
-from re import A
+from pyexpat import model
 from typing import Tuple
-from tensorflow.keras.layers import Input, Dense, Dropout, Conv2D, Flatten, MaxPool2D, BatchNormalization, Activation
 import tensorflow as tf
+from tensorflow.keras.layers import Input, Dense, Dropout, Conv2D, Flatten, MaxPool2D, BatchNormalization, Activation
+from tensorflow.keras.models import Model
+
+
 
 
 
@@ -47,7 +50,7 @@ class Model1():
         conv = Conv2D(16, (5, 5), (2, 2), padding='same')(af)
         bn = BatchNormalization()(conv)
         af = Activation(tf.nn.crelu)(bn)
-        pool = MaxPool2D((2, 2), (1, 1))(af)
+        pool = MaxPool2D((2, 2), (1, 1), padding='same')(af)
         
         return pool
 
@@ -55,7 +58,7 @@ class Model1():
     def get_model(self):
 
         """ model loader """
-        
+
         input = Input(self.input_shape)
 
         conv = self.conv_block(input)
@@ -73,12 +76,16 @@ class Model1():
         flatten = Flatten()(conv_maxpool)
         dropout = Dropout(self.dropout)(flatten)
 
-        dense = Dense(40, 'crelu')(dropout)
+        dense = Dense(40, tf.nn.crelu)(dropout)
+        # af = Activation(tf.nn.crelu)(dense)
         dropout = Dropout(self.dropout)(dense)
 
-        dense = Dense(20, 'crelu')(dropout)
+        dense = Dense(20, tf.nn.crelu)(dropout)
+        # af = Activation(tf.nn.crelu)(dense)
         dropout = Dropout(self.dropout)(dense)
 
-        classifier = Dense(11, 'softmax')(dropout)
+        classifier = Dense(self.num_classes, 'softmax')(dropout)
 
-        return classifier
+        model = Model(inputs=input, outputs=classifier)
+
+        return model
