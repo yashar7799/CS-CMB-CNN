@@ -13,6 +13,7 @@ from .inception import InceptionV3
 from .nasnet import NASNetMobile
 from .vgg import VGG16, VGG19
 from .xception import Xception
+from .from_scratch import Model1
 
 MODELS = dict(
     densenet=DenseNet121,
@@ -25,7 +26,8 @@ MODELS = dict(
     resnet50v2=ResNet50V2,
     vgg16=VGG16,
     vgg19=VGG19,
-    xception=Xception
+    xception=Xception,
+    model1 = Model1
 )
 
 
