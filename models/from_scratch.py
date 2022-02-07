@@ -1,4 +1,3 @@
-from pyexpat import model
 from typing import Tuple
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Dense, Dropout, Conv2D, Flatten, MaxPool2D, BatchNormalization, Activation
@@ -18,20 +17,15 @@ class Model1():
     def __init__(self, 
                  input_shape: Tuple[int, int, int] = (256, 256, 1),
                  num_classes: int = 10,
-                 pre_trained: bool = False,
-                 model_path: str = None,
                  dropout: float = 0.5):
 
         """
-        :param model_path: where the model is located
         :param input_shape: input shape for the model to be built with
         :param num_classes: number of classes in the classification problem
         """
 
-        self.model_path = model_path
         self.input_shape = input_shape
         self.num_classes = num_classes
-        self.pre_trained = pre_trained
         self.dropout = dropout
 
     def conv_block(self, input):
@@ -77,11 +71,9 @@ class Model1():
         dropout = Dropout(self.dropout)(flatten)
 
         dense = Dense(40, tf.nn.crelu)(dropout)
-        # af = Activation(tf.nn.crelu)(dense)
         dropout = Dropout(self.dropout)(dense)
 
         dense = Dense(20, tf.nn.crelu)(dropout)
-        # af = Activation(tf.nn.crelu)(dense)
         dropout = Dropout(self.dropout)(dense)
 
         classifier = Dense(self.num_classes, 'softmax')(dropout)
