@@ -4,7 +4,7 @@ from tensorflow.keras import backend as K
 
 
 def cosine_decay_with_warmup(global_step,
-                             learning_rate_base,
+                             warmup_max_lr,
                              total_steps,
                              warmup_learning_rate=0.0,
                              warmup_steps=0,
@@ -14,11 +14,11 @@ def cosine_decay_with_warmup(global_step,
       Loshchilov and Hutter, SGDR: Stochastic Gradient Descent with Warm Restarts.
       ICLR 2017. https://arxiv.org/abs/1608.03983
     In this schedule, the learning rate grows linearly from warmup_learning_rate
-    to learning_rate_base for warmup_steps, then transitions to a cosine decay
+    to warmup_max_lr for warmup_steps, then transitions to a cosine decay
     schedule.
     Arguments:
         global_step {int} -- global step.
-        learning_rate_base {float} -- base learning rate.
+        warmup_max_lr {float} -- base learning rate.
         total_steps {int} -- total number of training steps.
     Keyword Arguments:
         warmup_learning_rate {float} -- initial learning rate for warm up. (default: {0.0})
@@ -35,18 +35,18 @@ def cosine_decay_with_warmup(global_step,
     if total_steps < warmup_steps:
         raise ValueError('total_steps must be larger or equal to '
                          'warmup_steps.')
-    learning_rate = 0.5 * learning_rate_base * (1 + np.cos(
+    learning_rate = 0.5 * warmup_max_lr * (1 + np.cos(
         np.pi *
         (global_step - warmup_steps - hold_base_rate_steps
          ) / float(total_steps - warmup_steps - hold_base_rate_steps)))
     if hold_base_rate_steps > 0:
         learning_rate = np.where(global_step > warmup_steps + hold_base_rate_steps,
-                                 learning_rate, learning_rate_base)
+                                 learning_rate, warmup_max_lr)
     if warmup_steps > 0:
-        if learning_rate_base < warmup_learning_rate:
+        if warmup_max_lr < warmup_learning_rate:
             raise ValueError('learning_rate_base must be larger or equal to '
                              'warmup_learning_rate.')
-        slope = (learning_rate_base - warmup_learning_rate) / warmup_steps
+        slope = (warmup_max_lr - warmup_learning_rate) / warmup_steps
         warmup_rate = slope * global_step + warmup_learning_rate
         learning_rate = np.where(global_step < warmup_steps, warmup_rate,
                                  learning_rate)
@@ -58,7 +58,7 @@ class WarmUpCosineDecayScheduler(keras.callbacks.Callback):
     """
 
     def __init__(self,
-                 learning_rate_base,
+                 warmup_max_lr,
                  total_steps,
                  global_step_init=0,
                  warmup_learning_rate=0.0,
@@ -68,7 +68,7 @@ class WarmUpCosineDecayScheduler(keras.callbacks.Callback):
                  mlflow=None):
         """Constructor for cosine decay with warmup learning rate scheduler.
     Arguments:
-        learning_rate_base {float} -- base learning rate.
+        warmup_max_lr {float} -- base learning rate.
         total_steps {int} -- total number of training steps.
     Keyword Arguments:
         global_step_init {int} -- initial global step, e.g. from previous checkpoint.
@@ -80,7 +80,7 @@ class WarmUpCosineDecayScheduler(keras.callbacks.Callback):
         """
 
         super(WarmUpCosineDecayScheduler, self).__init__()
-        self.learning_rate_base = learning_rate_base
+        self.warmup_max_lr = warmup_max_lr
         self.total_steps = total_steps
         self.global_step = global_step_init
         self.warmup_learning_rate = warmup_learning_rate
@@ -96,7 +96,7 @@ class WarmUpCosineDecayScheduler(keras.callbacks.Callback):
 
     def on_batch_begin(self, batch, logs=None):
         lr = cosine_decay_with_warmup(global_step=self.global_step,
-                                      learning_rate_base=self.learning_rate_base,
+                                      warmup_max_lr=self.warmup_max_lr,
                                       total_steps=self.total_steps,
                                       warmup_learning_rate=self.warmup_learning_rate,
                                       warmup_steps=self.warmup_steps,
