@@ -19,7 +19,7 @@ def main_args():
     parser.add_argument('--model', type=str, default='model1', help='model name.', required=True)
     parser.add_argument('--epochs', type=int, default=5, help='define number of training epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='define batch size')
-    parser.add_argument('--n_classes', type=int, default=10, help='number of classes; this should be same as the number of classes of the dataset you are using')
+    parser.add_argument('--n_classes', type=int, default=10, help='number of classes; this should be same as the number of classes of the dataset you are using', required=True)
     parser.add_argument('--dropout_rate', type=float, default=0.5, help='define dropout rate to use between fc layers')
 
     parser.add_argument('--input_shape', type=tuple, default=(256, 256, 1), help='desired input shape to feed the model with')
@@ -32,8 +32,8 @@ def main_args():
     parser.add_argument('--dataset_dir', type=str, default='./dataset/CS-CMB-CNN-data', help='dataset directory, this directory should contain train, val & test folders', required=True)
 
     parser.add_argument('--mlflow-source', type=str, default='./mlruns', help='The mlflow direcotry')
-    parser.add_argument('--run-ngrok', dest='run_ngrok', action='store_true', help="Run ngrok for colab!")
-    parser.add_argument('--no-run-ngrok', dest='run_ngrok', action='store_false', help="Don't run ngrok for colab!")
+    parser.add_argument('--run-ngrok', dest='run_ngrok', action='store_true', help="pass this arg if you want to run train.py in colab!")
+    parser.add_argument('--no-run-ngrok', dest='run_ngrok', action='store_false', help="pass this arg if you want to run train.py locally!")
 
     parser.add_argument('--augmentation', dest='augmentation', action='store_true', help='pass this arg if you want augmentations')
     parser.add_argument('--augmentation_p', type=float, default=0.5, help='augmentation probability')
@@ -59,8 +59,8 @@ def main_args():
     parser.add_argument('--cosine_decay_initial_lr', type=float, default=0.1, help='cosine_decay_lr_scheduler initial learning_rate')
     parser.add_argument('--cosine_decay_alpha', type=float, default=0.001, help='minimum learning_rate value as a fraction of cosine_decay_initial_lr.')
 
-    parser.add_argument('--tb_log_dir', type=str, default='./logs', help='The TensorBoard directory')
+    parser.add_argument('--tb_log_dir', type=str, default='./tb_logs', help='The TensorBoard directory')
 
-    parser.set_defaults(multiprocessing=True, warmup_lr_scheduler=False, reduce_lr_scheduler=False, cosine_decay_lr_scheduler=False)
+    parser.set_defaults(pretrain=False, run_ngrok=True, augmentation=False, multiprocessing=True, warmup_lr_scheduler=False, plateau_reduce_lr_scheduler=False, cosine_decay_lr_scheduler=False)
 
     return parser
