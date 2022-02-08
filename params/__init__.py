@@ -1,7 +1,7 @@
-from .main import main_args
+# from .main import main_args
 
 ARGUMENTS = dict(
-    model1=main_args
+    # model1=main_args
 )
 
 def get_args(model_name):
