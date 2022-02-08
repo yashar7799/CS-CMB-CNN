@@ -11,9 +11,9 @@ from datetime import datetime
 
 
 def get_callbacks(model_path,
-                  early_stopping_p,
+                  early_stopping_patience,
                   tb_log_dir,
-                  plateau_min_lr,
+                  plateau_reduce_min_lr,
                   plateau_reduce_patience,
                   epochs,
                   warmup_epoch,
@@ -21,6 +21,7 @@ def get_callbacks(model_path,
                   warmup_max_lr,
                   sample_count,
                   model_name,
+                  n_classes,
                   **kwargs):
     """
     This function use some callbacks from tensorflow.python.keras.callbacks
@@ -46,10 +47,10 @@ def get_callbacks(model_path,
                                  save_weights_only=True,
                                  )
 
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss',
+    plateau_reduce_lr = ReduceLROnPlateau(monitor='val_loss',
                                   factor=0.8,  # new_lr = lr * factor
                                   patience=plateau_reduce_patience,  # number of epochs with no improvment
-                                  min_lr=plateau_min_lr,  # lower bound on the learning rate
+                                  min_lr=plateau_reduce_min_lr,  # lower bound on the learning rate
                                   mode='min',
                                   verbose=1
                                   )
@@ -62,18 +63,18 @@ def get_callbacks(model_path,
     # warmup_batches = warmup_epoch * sample_count / batch_size
 
     # Create the Learning rate scheduler.
-    warm_up_lr = WarmUpCosineDecayScheduler(warmup_max_lr=warmup_max_lr,
+    warmup_lr = WarmUpCosineDecayScheduler(warmup_max_lr=warmup_max_lr,
                                             total_steps=total_steps,
                                             warmup_learning_rate=0.0,
                                             warmup_steps=warmup_steps,
                                             hold_base_rate_steps=0, 
                                             verbose=0)
 
-    early_stopping = EarlyStopping(monitor="val_loss", patience=early_stopping_p, verbose=1)
+    early_stopping = EarlyStopping(monitor="val_loss", patience=early_stopping_patience, verbose=1)
 
-    tensorboard = TensorBoard(log_dir=tb_log_dir + '/' + model_name + '_{}'.format(str(datetime.now()).replace(':', '_').replace(' ','_')),
+    tensorboard = TensorBoard(log_dir=tb_log_dir + '/' + model_name + '{}classes__{}'.format(str(n_classes), str(datetime.now()).replace(':', '_').replace(' ','_')),
                               histogram_freq=0,
                               write_graph=True,
                               write_images=True)
 
-    return checkpoint, warm_up_lr, early_stopping, tensorboard, reduce_lr
+    return checkpoint, warmup_lr, early_stopping, tensorboard, plateau_reduce_lr
