@@ -42,7 +42,7 @@ def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
     for i, y1 in enumerate(y_pred):
         if y1 == y_true[i]:
             correct_count = correct_count + 1
-    mlflow_handler.add_report(f"Test Accuracy:  {correct_count / len(y_pred)}" + "\n", 'logs/test_results.txt')
+    mlflow_handler.add_report(f"Test Accuracy:  {correct_count / len(y_pred)}" + "\n", 'logs/test_accuracy.txt')
     print(f"Test Accuracy:  {correct_count / len(y_pred)}")
     # Metrics: Confusion Matrix
     con_mat = confusion_matrix(y_true, y_pred)
@@ -58,5 +58,5 @@ def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
     plt.show()
     mlflow_handler.add_figure(fig, 'logs/confusion_matrix.png')
     report = classification_report(y_true, y_pred)
-    mlflow_handler.add_report(report, 'logs/test_results.txt')
+    mlflow_handler.add_report(report, 'logs/classification_report.txt')
     print(report)
