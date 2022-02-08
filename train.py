@@ -8,7 +8,7 @@ from utils.metrics import *
 from datetime import datetime
 import os
 from models import load_model
-# from params import get_args
+from params import get_args
 from params.main import main_args
 from data_handler.data_loader import DataGenerator
 from data_handler.data_creator import DataCreator
@@ -39,7 +39,7 @@ def train():
 
     model_name = sys.argv[2]
     print(f"Chosen Model: {model_name}")
-    args = main_args()
+    args = get_args(model_name)
     print(f"Arguments: {args}")
 
     id_ = model_name + "_" + str(args.n_classes) + "classes__" + \

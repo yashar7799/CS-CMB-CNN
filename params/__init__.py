@@ -1,7 +1,7 @@
-# from .unet_pretrain import unet_pretrain_args
+from .main import main_args
 
 ARGUMENTS = dict(
-    # unet_pretrain=unet_pretrain_args
+    model1=main_args
 )
 
 def get_args(model_name):
