@@ -61,6 +61,6 @@ def main_args():
 
     parser.add_argument('--tb_log_dir', type=str, default='./tb_logs', help='The TensorBoard directory')
 
-    parser.set_defaults(pretrain=False, run_ngrok=True, augmentation=False, multiprocessing=True, warmup_lr_scheduler=False, plateau_reduce_lr_scheduler=False, cosine_decay_lr_scheduler=False)
+    parser.set_defaults(pretrain=False, run_ngrok=True, augmentation=False, multiprocessing=False, warmup_lr_scheduler=False, plateau_reduce_lr_scheduler=False, cosine_decay_lr_scheduler=False)
 
     return parser.parse_args()
