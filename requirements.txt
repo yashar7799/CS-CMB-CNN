@@ -11,4 +11,5 @@ sklearn
 seaborn
 matplotlib
 gdown
+pyngrok
 mlflow>=1.20.2
