@@ -40,10 +40,9 @@ def train():
     model_name = sys.argv[2]
     print(f"Chosen Model: {model_name}")
     args = get_args(model_name)
-    print(f"Arguments: {args}")
+    print(f"Arguments: {args.parse_args()}")
 
-    id_ = model_name + "_" + str(args.n_classes) + "classes__" + \
-        str(datetime.now().date()) + "_" + str(datetime.now().time())
+    id_ = model_name + "_" + str(args.n_classes) + "classes__" + str(datetime.now().date()) + "_" + str(datetime.now().time())
     weights_base_path = os.path.join(args.weights_base_folder, f'{str(args.n_classes)}classes')
     os.makedirs(weights_base_path, exist_ok=True)
     weight_path = os.path.join(weights_base_path, id_) + ".h5"
