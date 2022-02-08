@@ -5,7 +5,6 @@ This file contains two modules:
 """
 
 import os
-from os.path import join
 import mlflow
 import mlflow.tensorflow
 from tensorflow.keras.callbacks import Callback
@@ -171,7 +170,7 @@ class MLFlowHandler:
         None
         """
         if model_path is not None:
-            self.add_weight(model_path, )
+            self.add_weight(model_path)
         self.mlflow.end_run()
 
     def add_figure(self, figure, artifact_path):
@@ -219,7 +218,6 @@ class MLFlowHandler:
         """
         if artifact_path is None:
             weight_name = os.path.split(weight_path)[-1]
-            artifact_path = join('models', weight_name)
-        print('model saved: ', mlflow.get_artifact_uri() + '/' + artifact_path + weight_path.replace('weights', ''))
+            artifact_path = os.path.join('weights', weight_name)
 
         self.mlflow.log_artifact(weight_path, artifact_path)
