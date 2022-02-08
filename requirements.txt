@@ -2,6 +2,7 @@ albumentations
 pillow
 numpy
 scipy
+pandas
 healpy
 git+https://github.com/vafaei-ar/ccgpack.git
 tensorflow
