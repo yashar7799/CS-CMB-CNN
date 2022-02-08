@@ -42,8 +42,6 @@ class MLFlowLogger(Callback):
         self.mlflow.log_metric('val acc', logs['val_acc'], step=epoch)
         self.mlflow.log_metric('train loss', logs['loss'], step=epoch)
         self.mlflow.log_metric('val_loss', logs['val_loss'], step=epoch)
-        self.mlflow.log_metric('train dice_coef', logs['dice_coef'], step=epoch)
-        self.mlflow.log_metric('val dice_coef', logs['val_dice_coef'], step=epoch)
 
     def on_batch_end(self, batch, logs=None):
         if self.warmup:
@@ -129,7 +127,7 @@ class MLFlowHandler:
 
         # Setting the authtoken (optional)
         # Get your authtoken from https://dashboard.ngrok.com/auth
-        NGROK_AUTH_TOKEN = ""
+        NGROK_AUTH_TOKEN = "24pkO9X3tHjxkSV5jlAWhhidCiU_5WsrwXvesVaXN6iskvsFn"
         ngrok.set_auth_token(NGROK_AUTH_TOKEN)
 
         # Open an HTTPs tunnel on port 5000 for http://localhost:5000
