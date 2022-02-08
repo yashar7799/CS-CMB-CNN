@@ -63,4 +63,4 @@ def main_args():
 
     parser.set_defaults(pretrain=False, run_ngrok=True, augmentation=False, multiprocessing=True, warmup_lr_scheduler=False, plateau_reduce_lr_scheduler=False, cosine_decay_lr_scheduler=False)
 
-    return parser
+    return parser.parse_args()
