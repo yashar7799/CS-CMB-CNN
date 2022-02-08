@@ -58,9 +58,14 @@ def train():
     data = DataCreator()
     partition, labels = data.partitioning(partitioning_base_folder= args.dataset_dir)
 
-    train_loader = DataGenerator(partition['train'], labels=labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
-    val_loader = DataGenerator(partition['val'], labels=labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
-    test_loader = DataGenerator(partition['test'], labels=labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
+    index_labels = {}
+    index_classes = {cls:idx for idx,cls in enumerate(sorted(set(labels.values()))) }
+    for key in labels:
+        index_labels[key] = index_classes[labels[key]]
+
+    train_loader = DataGenerator(partition['train'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
+    val_loader = DataGenerator(partition['val'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
+    test_loader = DataGenerator(partition['test'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
 
     model = load_model(args.model, input_shape=args.input_shape, num_classes=args.n_classes, dropout=args.dropout_rate)
 
