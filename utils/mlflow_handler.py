@@ -79,7 +79,7 @@ class MLFlowHandler:
         -   add_weight
     """
 
-    def __init__(self, model_name, run_name, warmup, mlflow_source='./mlruns', run_ngrok=True):
+    def __init__(self, model_name:str, run_name:str, warmup, ngrok_auth_token:str, mlflow_source:str='./mlruns', run_ngrok:bool=True):
         """
         Parameters
         ----------
@@ -94,6 +94,7 @@ class MLFlowHandler:
         """
         self.mlflow = mlflow
         self.run_ngrok = run_ngrok
+        self.ngrok_auth_token = ngrok_auth_token
         self.mlflow_source = mlflow_source
         self.mlflow.set_tracking_uri(mlflow_source)
         self.mlflow_logger = MLFlowLogger(mlflow, warmup)
@@ -105,7 +106,7 @@ class MLFlowHandler:
         self.model_name = model_name
 
     @staticmethod
-    def colab_ngrok(mlflow_source):
+    def colab_ngrok(mlflow_source, ngrok_auth_token):
         """
         Use to help mlflow ui run on colab.
 
@@ -126,7 +127,7 @@ class MLFlowHandler:
 
         # Setting the authtoken (optional)
         # Get your authtoken from https://dashboard.ngrok.com/auth
-        NGROK_AUTH_TOKEN = "24pkO9X3tHjxkSV5jlAWhhidCiU_5WsrwXvesVaXN6iskvsFn"
+        NGROK_AUTH_TOKEN = ngrok_auth_token
         ngrok.set_auth_token(NGROK_AUTH_TOKEN)
 
         # Open an HTTPs tunnel on port 5000 for http://localhost:5000
@@ -155,7 +156,7 @@ class MLFlowHandler:
         for k, v in args._get_kwargs():
             self.mlflow.log_param(k, v)
         if self.run_ngrok:
-            self.colab_ngrok(self.mlflow_source)
+            self.colab_ngrok(self.mlflow_source, self.ngrok_auth_token)
 
     def end_run(self, model_path=None):
         """

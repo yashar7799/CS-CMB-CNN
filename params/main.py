@@ -31,15 +31,16 @@ def main_args():
 
     parser.add_argument('--dataset_dir', type=str, default='./dataset/CS-CMB-CNN-data', help='dataset directory, this directory should contain train, val & test folders', required=True)
 
-    parser.add_argument('--mlflow-source', type=str, default='./mlruns', help='The mlflow direcotry')
-    parser.add_argument('--run-ngrok', dest='run_ngrok', action='store_true', help="pass this arg if you want to run train.py in colab!")
-    parser.add_argument('--no-run-ngrok', dest='run_ngrok', action='store_false', help="pass this arg if you want to run train.py locally!")
+    parser.add_argument('--mlflow_source', type=str, default='./mlruns', help='The mlflow direcotry')
+    parser.add_argument('--run_ngrok', dest='run_ngrok', action='store_true', help="pass this arg if you want to run train.py in colab!")
+    parser.add_argument('--no_run_ngrok', dest='run_ngrok', action='store_false', help="pass this arg if you want to run train.py locally!")
+    parser.add_argument('--ngrok_auth_token', type=str, help='an authentication token that ngrok gives it to you')
 
     parser.add_argument('--augmentation', dest='augmentation', action='store_true', help='pass this arg if you want augmentations')
     parser.add_argument('--augmentation_p', type=float, default=0.5, help='augmentation probability')
 
     parser.add_argument('--multiprocessing', dest='multiprocessing', action='store_true', help="Run model.fit with multi-processing")
-    parser.add_argument('--no-multiprocessing', dest='multiprocessing', action='store_false', help="Run model.fit without multi-processing")
+    parser.add_argument('--no_multiprocessing', dest='multiprocessing', action='store_false', help="Run model.fit without multi-processing")
     parser.add_argument('--workers', type=int, default=1, help="number of workers for model.fit")
 
     parser.add_argument('--early_stopping_patience', type=int, default=6, help='early stopping patience')

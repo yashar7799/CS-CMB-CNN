@@ -51,7 +51,8 @@ def train():
                                    warmup=args.warmup_lr_scheduler,
                                    run_name=id_,
                                    mlflow_source=args.mlflow_source,
-                                   run_ngrok=args.run_ngrok)
+                                   run_ngrok=args.run_ngrok,
+                                   ngrok_auth_token=args.ngrok_auth_token)
     mlflow_handler.start_run(args)
 
     data = DataCreator()
