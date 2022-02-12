@@ -38,9 +38,9 @@ def train():
     """
 
     model_name = sys.argv[2]
-    print(f"Chosen Model: {model_name}")
+    print(f"Chosen Model: {model_name}\n")
     args = main_args()
-    print(f"Arguments: {args}")
+    print(f"Arguments: {args}\n")
 
     id_ = model_name + "_" + str(args.n_classes) + "classes__" + str(datetime.now().date()) + "_" + str(datetime.now().time())
     weights_base_path = os.path.join(args.weights_base_folder, f'{str(args.n_classes)}classes')
@@ -63,17 +63,22 @@ def train():
     for key in labels:
         index_labels[key] = index_classes[labels[key]]
 
+    report = list(index_classes.items())
+    mlflow_handler.add_report(report, 'logs/class&index_pairs.txt')
+
+    print(f'(class, index) pairs are: {report}\n')
+
     train_loader = DataGenerator(partition['train'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
     val_loader = DataGenerator(partition['val'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
     test_loader = DataGenerator(partition['test'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
 
     model = load_model(args.model, input_shape=args.input_shape, num_classes=args.n_classes, dropout=args.dropout_rate)
 
-    print("Loading Model is Done!")
+    print("Loading Model is Done!\n")
 
     if args.pretrain:
         model.load_weights(args.path_to_pretrain)
-        print('pretrain weights loaded.')
+        print('pretrain weights loaded.\n')
     model.summary()
 
     checkpoint, warmup_lr, early_stopping, tensorboard, plateau_reduce_lr = get_callbacks(model_path=weight_path,
@@ -93,19 +98,19 @@ def train():
     
     if args.warmup_lr_scheduler:
         callbacks.append(warmup_lr)
-        print('activate warmup_lr_scheduler.')
+        print('warmup_lr_scheduler activated.\n')
     elif args.cosine_decay_lr_scheduler:
         lr_scheduler = tf.keras.optimizers.schedules.CosineDecay(
             initial_learning_rate=args.cosine_decay_initial_lr, decay_steps=args.epochs, alpha=args.cosine_decay_alpha, name='None')
         opt = Adam(learning_rate=lr_scheduler)
-        print('activate cosine_decay_lr_scheduler.')
+        print('cosine_decay_lr_scheduler activated.\n')
     elif args.plateau_reduce_lr_scheduler:
         callbacks.append(plateau_reduce_lr)
         opt = Adam(learning_rate=args.plateau_reduce_initial_lr)
-        print('activate plateau_reduce_lr_scheduler.')
+        print('plateau_reduce_lr_scheduler activated.\n')
     else:
         opt = Adam(learning_rate=args.learning_rate)
-        print(f'No lr_scheduler, learning rate fixed at: {args.learning_rate}')
+        print(f'none of lr_schedulers  activated, learning rate fixed at: {args.learning_rate}\n')
 
     loss = tf.keras.losses.Huber()
     model.compile(optimizer=opt, loss=loss, metrics=['acc'])
@@ -119,7 +124,7 @@ def train():
               workers=args.workers,
               )
 
-    print("Training Model is Done!")
+    print("Training Model is Done!\n")
 
     get_logs(model, test_loader, args.n_classes, mlflow_handler)
     mlflow_handler.end_run(weight_path)

@@ -24,7 +24,7 @@ def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
     Nothing         just save plots of predicted mask by model to visual intuition
     """
 
-    print('Making  prediction of test data')
+    print('Making  prediction of test data ...\n')
 
     y_pred, y_true = None, None
     for x, y in test_loader:
@@ -43,15 +43,15 @@ def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
         if y1 == y_true[i]:
             correct_count = correct_count + 1
     mlflow_handler.add_report(f"Test Accuracy:  {correct_count / len(y_pred)}" + "\n", 'logs/test_accuracy.txt')
-    print(f"Test Accuracy:  {correct_count / len(y_pred)}")
+    print(f"Test Accuracy:  {correct_count / len(y_pred)}\n")
     # Metrics: Confusion Matrix
     con_mat = confusion_matrix(y_true, y_pred)
     print(con_mat)
+    print('\n')
     con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
     con_mat_df = pd.DataFrame(con_mat_norm, index=[i for i in range(n_classes)], columns=[i for i in range(n_classes)])
-    fig = plt.figure(figsize=(n_classes, n_classes))
+    fig = plt.figure(figsize=(n_classes, n_classes), tight_layout=True)
     sns.heatmap(con_mat_df, annot=True, cmap=plt.cm.Blues)
-    fig.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.title('Confusion Matrix')
