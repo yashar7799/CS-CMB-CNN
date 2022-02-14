@@ -92,6 +92,7 @@ def train():
                                                                                model_name=model_name,
                                                                                n_classes=args.n_classes,
                                                                                plateau_reduce_min_lr=args.plateau_reduce_min_lr,
+                                                                               plateau_reduce_factor=args.plateau_reduce_factor,
                                                                                plateau_reduce_patience=args.plateau_reduce_patience)
     
     callbacks = [tensorboard, checkpoint, early_stopping, mlflow_handler.mlflow_logger]

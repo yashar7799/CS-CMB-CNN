@@ -49,6 +49,7 @@ def main_args():
 
     parser.add_argument('--plateau_reduce_lr_scheduler', dest='plateau_reduce_lr_scheduler', action='store_true', help="use plateau_reduce_lr_scheduler")
     parser.add_argument('--plateau_reduce_initial_lr', type=float, default=0.001, help='initilal learning rate for plateau_reduce_lr_scheduler')
+    parser.add_argument('--plateau_reduce_factor', type=float, default=0.8, help='factor by which the learning rate will be reduced; new_lr = previous_lr * factor')
     parser.add_argument('--plateau_reduce_min_lr', type=float, default=0.0001, help='lower bound on the learning rate for plateau_reduce_lr_scheduler')
     parser.add_argument('--plateau_reduce_patience', type=int, default=4, help='number of epochs with no improvement after which learning rate will be reduced.')
 
