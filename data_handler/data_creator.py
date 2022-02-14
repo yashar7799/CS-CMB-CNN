@@ -54,6 +54,8 @@ class DataCreator():
         if not os.path.isfile(f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits'):
             gdown.download(id='1KFIGKLee-OBrG7t5Gwk_uuTE0RegdsQ4', output=f'{download_base_folder}/product-action?SIMULATED_MAP.FILE_ID=febecop_ffp10_lensed_scl_cmb_100_mc_0004.fits', resume=True)
 
+        print('raw data downloaded.\n')
+
     def create(self, g_mu_values:list = [0, 1e-5, 5e-6, 1e-6, 5e-7, 1e-7, 5e-8, 1e-8, 5e-9, 1e-9], val_ratio:float = 0.15, create_base_folder:str = '/content/drive/MyDrive/CS-CMB-CNN-data'):
 
         folders = []
@@ -116,6 +118,8 @@ class DataCreator():
                     image = Image.fromarray(array)
                     image.save(f'{create_base_folder}/test/{g_mu_str}/{n}_3_4_{g_mu_str}.png')
 
+        print('data creation completed.\n')
+
     def partitioning(self, partitioning_base_folder:str = './dataset'):
 
         train_classes = sorted(os.listdir(os.path.join(partitioning_base_folder, 'train')))
@@ -159,5 +163,7 @@ class DataCreator():
             n_test = len(os.listdir(os.path.join(partitioning_base_folder, 'test', label)))
 
             print(f'{label} >>> train: {n_train} | val: {n_val} | test: {n_test}')
+
+        print('\n')
 
         return partition, labels

@@ -11,6 +11,7 @@ def get_callbacks(model_path,
                   early_stopping_patience,
                   tb_log_dir,
                   plateau_reduce_min_lr,
+                  plateau_reduce_factor,
                   plateau_reduce_patience,
                   epochs,
                   warmup_epoch,
@@ -44,8 +45,8 @@ def get_callbacks(model_path,
                                  save_weights_only=True,
                                  )
 
-    plateau_reduce_lr = ReduceLROnPlateau(monitor='val_loss',
-                                  factor=0.8,  # new_lr = lr * factor
+    plateau_reduce_lr = ReduceLROnPlateau(monitor='val_loss', 
+                                  factor=plateau_reduce_factor,  # new_lr = lr * factor
                                   patience=plateau_reduce_patience,  # number of epochs with no improvment
                                   min_lr=plateau_reduce_min_lr,  # lower bound on the learning rate
                                   mode='min',
