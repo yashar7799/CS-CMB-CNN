@@ -143,7 +143,7 @@ class DataCreator():
                 pass
             else:
                 l = folder.split('_')
-                folder == l[0] + '-' + l[1]
+                folder = l[0] + '-' + l[1]
 
             for train in train_files:
                 partition['train'].append(train)
