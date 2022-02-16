@@ -10,9 +10,9 @@ import numpy as np
 from .mlflow_handler import MLFlowHandler
 
 
-def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
-    """
+def get_logs(model, test_loader, unique_labels, mlflow_handler: MLFlowHandler):
 
+    """
     Parameters
     ----------
     model           A `Tensorflow.keras.Model` instance.
@@ -49,8 +49,8 @@ def get_logs(model, test_loader, n_classes, mlflow_handler: MLFlowHandler):
     print(con_mat)
     print('\n')
     con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
-    con_mat_df = pd.DataFrame(con_mat_norm, index=[i for i in range(n_classes)], columns=[i for i in range(n_classes)])
-    fig = plt.figure(figsize=(n_classes, n_classes), tight_layout=True)
+    con_mat_df = pd.DataFrame(con_mat_norm, index=[i for i in unique_labels], columns=[i for i in unique_labels])
+    fig = plt.figure(figsize=(len(unique_labels), len(unique_labels)), tight_layout=True)
     sns.heatmap(con_mat_df, annot=True, cmap=plt.cm.Blues)
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
