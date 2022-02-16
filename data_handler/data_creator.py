@@ -139,6 +139,12 @@ class DataCreator():
             val_files = np.array(glob(os.path.join(partitioning_base_folder, 'val', folder, '*')))
             test_files = np.array(glob(os.path.join(partitioning_base_folder, 'test', folder, '*')))
 
+            if folder == '0':
+                pass
+            else:
+                l = folder.split('_')
+                folder == l[0] + '-' + l[1]
+
             for train in train_files:
                 partition['train'].append(train)
                 labels[train] = folder

@@ -58,14 +58,18 @@ def train():
     data = DataCreator()
     partition, labels = data.partitioning(partitioning_base_folder= args.dataset_dir)
 
+    unique_labels = sorted(set(labels.values()), key=float)
     index_labels = {}
-    index_classes = {cls:idx for idx,cls in enumerate(sorted(set(labels.values()))) }
+    index_classes = {cls:idx for idx,cls in enumerate(unique_labels)}
     for key in labels:
         index_labels[key] = index_classes[labels[key]]
 
     report = list(index_classes.items())
     mlflow_handler.add_report(str(report), 'logs/class&index_pairs.txt')
 
+    mlflow_handler.add_report(unique_labels, 'logs/classes.txt')
+
+    print(f'classes are: {unique_labels}\n')
     print(f'(class, index) pairs are: {report}\n')
 
     train_loader = DataGenerator(partition['train'], labels=index_labels, batch_size=args.batch_size, dim=(args.input_shape[0], args.input_shape[1]), n_channels=args.input_shape[2], n_classes=args.n_classes)
@@ -127,7 +131,7 @@ def train():
 
     print("Training Model is Done!\n")
 
-    get_logs(model, test_loader, args.n_classes, mlflow_handler)
+    get_logs(model, test_loader, unique_labels, mlflow_handler)
     mlflow_handler.end_run(weight_path)
 
 
