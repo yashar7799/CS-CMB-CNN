@@ -65,9 +65,9 @@ def train():
         index_labels[key] = index_classes[labels[key]]
 
     report = list(index_classes.items())
-    mlflow_handler.add_report(report, 'logs/class&index_pairs.txt')
+    mlflow_handler.add_report(str(report), 'logs/class&index_pairs.txt')
 
-    mlflow_handler.add_report(unique_labels, 'logs/classes.txt')
+    mlflow_handler.add_report(str(unique_labels), 'logs/classes.txt')
 
     print(f'classes are: {unique_labels}\n')
     print(f'(class, index) pairs are: {report}\n')
