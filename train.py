@@ -4,7 +4,6 @@ This is the main module of this project ; here we difine a function to start tra
 
 import sys
 import tensorflow as tf
-from utils.metrics import *
 from datetime import datetime
 import os
 from models import load_model
