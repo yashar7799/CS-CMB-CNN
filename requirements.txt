@@ -1,4 +1,3 @@
-albumentations
 pillow
 numpy
 scipy
