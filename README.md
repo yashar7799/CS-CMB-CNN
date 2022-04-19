@@ -1,7 +1,7 @@
 # CS-CMB-CNN
 ‫‪Recognition‬‬ ‫‪of‬‬ ‫‪Cosmic‬‬ ‫‪String‬‬ ‫‪location‬‬ ‫‪on‬‬ ‫‪the‬‬ ‫‪CMB‬‬ ‫‪map‬‬ ‫‪by‬‬ ‫‪using‬‬ ‫‪Convolutional‬‬ ‫‪Neural‬‬ ‫‪Networks‬‬ (CNNs)
 
-This repository is a complete model trainig loop to train multi-class models to do a classification task to recognize the exictense of the ‫‪Cosmic‬‬ ‫‪String tension (g_mu) in a given patch of the skymap.
+This repository is a complete model trainig loop (implemented in TensorFlow) to train multi-class models to do a classification task to recognize the exictense of the ‫‪Cosmic‬‬ ‫‪String tension (g_mu) in a given patch of the skymap.
 
 Suggestion: Read [this](https://www.researchgate.net/profile/Motahare-Torki/publication/352054373_Planck_Limits_on_Cosmic_String_Tension_Using_Machine_Learning/links/60c06cdb458515bfdb556da4/Planck-Limits-on-Cosmic-String-Tension-Using-Machine-Learning.pdf) paper to know more about the problem and theoretical aspects.
 
