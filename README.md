@@ -1,11 +1,12 @@
-# CS-CMB-CNN
 ‫‪Recognition‬‬ ‫‪of‬‬ ‫‪Cosmic‬‬ ‫‪String‬‬ ‫‪location‬‬ ‫‪on‬‬ ‫‪the‬‬ ‫‪CMB‬‬ ‫‪map‬‬ ‫‪by‬‬ ‫‪using‬‬ ‫‪Convolutional‬‬ ‫‪Neural‬‬ ‫‪Networks‬‬ (CNNs)
+=====
 
-This repository is a complete model trainig loop (implemented in TensorFlow) to train multi-class models to do a classification task to recognize the exictense of the ‫‪Cosmic‬‬ ‫‪String tension (g_mu) in a given patch of the skymap.
 
-Suggestion: Read [this](https://www.researchgate.net/profile/Motahare-Torki/publication/352054373_Planck_Limits_on_Cosmic_String_Tension_Using_Machine_Learning/links/60c06cdb458515bfdb556da4/Planck-Limits-on-Cosmic-String-Tension-Using-Machine-Learning.pdf) paper to know more about the problem and theoretical aspects.
+This repository is a complete model training loop (implemented in TensorFlow) to train multi-class models to do a classification task to recognize the existence of the ‫‪Cosmic‬‬ ‫‪String tension (g_mu) in a given patch of the skymap.
 
-Here, classes are different values of g_mu that you gave it to the data creation part of this repo to make the classes.
+Note: This project is done as my Bachelor's project under the supervision of [Dr. S.M.S Movahed](https://scholar.google.com/citations?user=uhy9JDAAAAAJ&hl=en); this project is a reproduced version of [this paper](https://www.researchgate.net/profile/Motahare-Torki/publication/352054373_Planck_Limits_on_Cosmic_String_Tension_Using_Machine_Learning/links/60c06cdb458515bfdb556da4/Planck-Limits-on-Cosmic-String-Tension-Using-Machine-Learning.pdf) (deep learning part); so if you want to know more about the problem and theoretical aspects, I highly suggest you check out the mentioned paper.
+-----
+Here, classes are different values of g_mu that you gave to the data creation part of this repo to make the classes.
 
 To use this repo you should first clone it and do the following two steps:
 1. data creation
