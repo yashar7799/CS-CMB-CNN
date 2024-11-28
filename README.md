@@ -1,4 +1,4 @@
-‫‪Recognition‬‬ ‫‪of‬‬ ‫‪Cosmic‬‬ ‫‪String‬‬ ‫‪location‬‬ ‫‪on‬‬ ‫‪the‬‬ ‫‪CMB‬‬ ‫‪map‬‬ ‫‪by‬‬ ‫‪using‬‬ ‫‪Convolutional‬‬ ‫‪Neural‬‬ ‫‪Networks‬‬ (CNNs)
+Classification of Cosmic Strings on the CMB Map Using CNNs‬‬ (CNNs)
 =====
 
 
